@@ -45,7 +45,7 @@ export function Input({
   return (
     <input
       className={clsx(
-        'h-10 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-400 hover:border-zinc-400 focus:border-violet-500 disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500',
+        'h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-400 hover:border-zinc-400 focus:border-violet-500 disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500',
         className,
       )}
       {...props}
@@ -61,7 +61,7 @@ export function Select({
   return (
     <select
       className={clsx(
-        'h-10 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors hover:border-zinc-400 focus:border-violet-500',
+        'h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors hover:border-zinc-400 focus:border-violet-500',
         className,
       )}
       {...props}

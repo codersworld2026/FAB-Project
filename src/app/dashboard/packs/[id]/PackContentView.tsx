@@ -164,12 +164,28 @@ function Section({
   title: string;
   children: React.ReactNode;
 }) {
+  // Collapsible accordion (open by default): expanded on desktop, tap to
+  // collapse on mobile. Native <details> keeps it server-rendered + accessible.
   return (
-    <Card>
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500">
-        {title}
-      </h2>
-      {children}
+    <Card className="p-0">
+      <details open className="group">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-2 px-5 py-4 sm:px-6 [&::-webkit-details-marker]:hidden">
+          <span className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+            {title}
+          </span>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            className="shrink-0 text-zinc-400 transition-transform group-open:rotate-180"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </summary>
+        <div className="px-5 pb-5 sm:px-6 sm:pb-6">{children}</div>
+      </details>
     </Card>
   );
 }

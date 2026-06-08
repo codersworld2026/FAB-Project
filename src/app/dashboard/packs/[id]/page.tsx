@@ -62,7 +62,7 @@ export default async function PackDetailPage({
             PDF and PowerPoint exports arrive in Milestone 5.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
           <DisabledDownload>PDF</DisabledDownload>
           <DisabledDownload>PowerPoint</DisabledDownload>
         </div>
@@ -113,7 +113,7 @@ function DisabledDownload({ children }: { children: React.ReactNode }) {
     <button
       disabled
       title="Available in Milestone 5"
-      className="inline-flex h-10 cursor-not-allowed items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 px-4 text-sm font-medium text-zinc-400"
+      className="inline-flex h-11 w-full cursor-not-allowed items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 px-4 text-sm font-medium text-zinc-400 sm:w-auto"
     >
       {children}
     </button>

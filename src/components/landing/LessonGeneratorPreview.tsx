@@ -13,8 +13,15 @@ export function LessonGeneratorPreview() {
   ] as const;
 
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-violet-100 bg-white p-5 shadow-xl shadow-violet-200/40">
-      <p className="text-sm font-semibold text-zinc-900">Lesson generator</p>
+    <div className="w-full max-w-sm rounded-3xl border border-violet-100 bg-white p-5 shadow-2xl shadow-violet-300/30 ring-1 ring-white">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-bold text-zinc-900">Lesson generator</p>
+        <span className="flex gap-1" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-rose-300" />
+          <span className="h-2 w-2 rounded-full bg-amber-300" />
+          <span className="h-2 w-2 rounded-full bg-emerald-300" />
+        </span>
+      </div>
 
       <label className="mt-4 block text-xs font-medium text-zinc-500">
         What will you teach?

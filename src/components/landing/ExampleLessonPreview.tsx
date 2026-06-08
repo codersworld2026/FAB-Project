@@ -63,7 +63,7 @@ export function ExampleLessonPreview({ ctaHref }: { ctaHref: string }) {
           <div
             role="tablist"
             aria-label="Lesson preview"
-            className="flex flex-wrap gap-1.5 border-b border-zinc-100 pb-3"
+            className="-mx-1 flex gap-1.5 overflow-x-auto scroll-smooth border-b border-zinc-100 px-1 pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {TABS.map((t) => (
               <button
@@ -72,9 +72,9 @@ export function ExampleLessonPreview({ ctaHref }: { ctaHref: string }) {
                 aria-selected={tab === t}
                 onClick={() => setTab(t)}
                 className={clsx(
-                  'rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors',
+                  'shrink-0 whitespace-nowrap rounded-lg px-3 py-2 text-xs font-semibold transition-colors',
                   tab === t
-                    ? 'bg-violet-600 text-white'
+                    ? 'bg-violet-600 text-white shadow-sm'
                     : 'text-zinc-500 hover:bg-violet-50 hover:text-violet-700',
                 )}
               >

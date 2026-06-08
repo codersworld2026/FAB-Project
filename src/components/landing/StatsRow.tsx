@@ -8,17 +8,20 @@ const STATS = [
 export function StatsRow() {
   return (
     <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
-      <div className="grid grid-cols-2 gap-4 rounded-3xl border border-violet-100 bg-white p-6 shadow-sm sm:p-8 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 rounded-3xl border border-violet-100 bg-white p-4 shadow-sm sm:gap-4 sm:p-8 lg:grid-cols-4">
         {STATS.map((s) => (
-          <div key={s.label} className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-50 text-xl">
+          <div
+            key={s.label}
+            className="flex items-center gap-3 rounded-2xl bg-violet-50/40 p-3 sm:bg-transparent sm:p-0"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-violet-50 text-lg sm:h-11 sm:w-11 sm:text-xl">
               {s.icon}
             </span>
-            <div>
-              <p className="text-xl font-extrabold tracking-tight text-zinc-900">
+            <div className="min-w-0">
+              <p className="truncate text-lg font-extrabold tracking-tight text-zinc-900 sm:text-xl">
                 {s.value}
               </p>
-              <p className="text-xs text-zinc-500">{s.label}</p>
+              <p className="text-[11px] text-zinc-500 sm:text-xs">{s.label}</p>
             </div>
           </div>
         ))}

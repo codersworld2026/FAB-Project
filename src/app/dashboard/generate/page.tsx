@@ -47,9 +47,7 @@ export default async function GeneratePage() {
           </Link>
         </Card>
       ) : (
-        <Card>
-          <GeneratorForm />
-        </Card>
+        <GeneratorForm />
       )}
     </div>
   );
