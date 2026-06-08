@@ -95,41 +95,33 @@ See `.env.example` for the full annotated list. Summary:
   `NEXT_PUBLIC_SUPPORT_EMAIL` — app config
 - `FREE_TRIAL_PACK_LIMIT`, `NEXT_PUBLIC_DEFAULT_EXAM_BOARD` — business defaults
 
-## Deployment (Firebase App Hosting)
+## Deployment (Vercel)
 
-This is a **server-rendered** Next.js app (server actions, dynamic routes,
-cookie auth), so it deploys on **Firebase App Hosting** — which builds the app
-and runs it on Cloud Run behind Firebase's CDN. (Classic Firebase Hosting with a
-static `public/` folder does **not** work for an SSR app and would break the
-generator/login.)
+This is a standard server-rendered Next.js app — Vercel runs it natively with no
+adapter or special config (no `vercel.json` needed). Server components, server
+actions, middleware, cookie auth and dynamic routes all work out of the box.
 
-Config lives in [`apphosting.yaml`](./apphosting.yaml). App Hosting is
-git-driven: once a backend is connected to the GitHub repo, every push to the
-tracked branch triggers a build + rollout. Requires the **Blaze** (pay-as-you-go)
-billing plan.
+**Setup**
+1. Import the GitHub repo into Vercel (**New Project → Import**, customer-owned
+   account). Vercel auto-detects Next.js (build `next build`, no overrides).
+2. Add the environment variables (below) under **Project → Settings →
+   Environment Variables**. None are required for the initial keyless
+   **preview-mode** deploy, so you can ship the demo first and add keys later.
+3. Deploy. Every push to the connected branch redeploys automatically; PRs get
+   preview URLs.
+4. Add the custom domain under **Project → Settings → Domains** and set
+   `NEXT_PUBLIC_APP_URL` to it.
 
-**One-time setup** (needs the Firebase project ID — not yet configured):
-```bash
-npm install -g firebase-tools     # if not installed
-firebase login
-firebase use --add                # select the customer's Firebase project
-firebase init apphosting          # connect this GitHub repo + branch, region
-```
-Or do it in the Firebase console: **Build → App Hosting → Get started**, connect
-the `codersworld2026/FAB-Project` repo and branch.
+**Environment variables** (see `.env.example` for the full annotated list):
 
-**Deploys:** push to the connected branch (auto rollout), or trigger manually:
-```bash
-firebase apphosting:rollouts:create BACKEND_ID
-```
-
-**Environment variables / secrets:** set in `apphosting.yaml` (public values) and
-Cloud Secret Manager (sensitive keys) — see the commented examples in that file.
-None are required for the initial keyless **preview-mode** deploy, so you can ship
-the demo first and add Supabase/Anthropic/Stripe keys later.
-
-**Custom domain:** Firebase console → App Hosting → your backend → **Add custom
-domain**.
+| Variable | Needed for |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase auth/DB (public) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only Supabase (generation, logs) |
+| `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` | AI generation |
+| `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_ID` | Payments (M6) |
+| `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_APP_NAME`, `NEXT_PUBLIC_SUPPORT_EMAIL` | App config |
+| `FREE_TRIAL_PACK_LIMIT`, `NEXT_PUBLIC_DEFAULT_EXAM_BOARD` | Business defaults |
 
 ## Cost note
 
