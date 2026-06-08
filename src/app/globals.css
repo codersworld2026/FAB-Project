@@ -215,3 +215,30 @@
     );
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * Print — "Print Lesson" renders only the hidden .printable block.
+ * ------------------------------------------------------------------ */
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+  }
+  body * {
+    visibility: hidden !important;
+  }
+  .printable,
+  .printable * {
+    visibility: visible !important;
+  }
+  .printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 8mm;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

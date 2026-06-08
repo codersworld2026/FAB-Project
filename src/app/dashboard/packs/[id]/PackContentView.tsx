@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Badge } from '@/components/ui';
 import { clsx } from '@/components/clsx';
+import { ExportPanel } from '@/components/export/ExportPanel';
 import type { PackContent } from '@/lib/types';
 
 type Meta = {
@@ -26,9 +27,13 @@ type Tab = (typeof TABS)[number];
 export function PackContentView({
   content,
   meta,
+  packId,
+  title,
 }: {
   content: PackContent;
   meta: Meta;
+  packId: string;
+  title: string;
 }) {
   const [tab, setTab] = useState<Tab>('Overview');
 
@@ -65,7 +70,7 @@ export function PackContentView({
         {tab === 'Worksheets' ? <WorksheetsTab content={content} /> : null}
         {tab === 'Assessment' ? <AssessmentTab content={content} /> : null}
         {tab === 'Teacher Notes' ? <TeacherNotesTab content={content} /> : null}
-        {tab === 'Export' ? <ExportTab /> : null}
+        {tab === 'Export' ? <ExportPanel packId={packId} title={title} /> : null}
       </div>
     </div>
   );
@@ -275,50 +280,6 @@ function NoteBlock({ title, accent, items }: { title: string; accent: string; it
         ))}
       </ul>
     </div>
-  );
-}
-
-/* ------------------------------- Export ------------------------------- */
-function ExportTab() {
-  return (
-    <div className="space-y-5">
-      <p className="text-sm text-zinc-600 dark:text-zinc-300">
-        Download your pack to edit, print and share. PDF and PowerPoint exports
-        are coming in the next release — the full content is ready to use now.
-      </p>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <ExportButton label="Download PDF" sub="Lesson plan, worksheets & assessment" icon="📄" />
-        <ExportButton label="Download PowerPoint" sub="Editable slide deck" icon="📊" />
-      </div>
-      <p className="rounded-xl bg-zinc-50 px-4 py-3 text-xs text-zinc-500 ring-1 ring-inset ring-zinc-100 dark:bg-zinc-800/50 dark:text-zinc-400 dark:ring-zinc-800">
-        Tip: every pack is original content, generated for your class — review
-        before teaching, and adapt anything you&apos;d like to tweak.
-      </p>
-    </div>
-  );
-}
-
-function ExportButton({ label, sub, icon }: { label: string; sub: string; icon: string }) {
-  return (
-    <button
-      type="button"
-      disabled
-      title="Available in a later release"
-      className="flex cursor-not-allowed items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-left dark:border-zinc-800 dark:bg-zinc-800/40"
-    >
-      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-xl shadow-sm dark:bg-zinc-900">
-        {icon}
-      </span>
-      <span className="min-w-0">
-        <span className="flex items-center gap-2 text-sm font-bold text-zinc-500 dark:text-zinc-400">
-          {label}
-          <span className="rounded bg-zinc-200 px-1.5 py-0.5 text-[10px] font-bold uppercase text-zinc-500 dark:bg-zinc-700 dark:text-zinc-300">
-            Soon
-          </span>
-        </span>
-        <span className="block text-xs text-zinc-400 dark:text-zinc-500">{sub}</span>
-      </span>
-    </button>
   );
 }
 

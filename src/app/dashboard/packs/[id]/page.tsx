@@ -4,6 +4,8 @@ import { requireProfile } from '@/lib/auth';
 import { getPack } from '@/lib/packs';
 import { Badge } from '@/components/ui';
 import { CellIcon } from '@/components/science/ScienceIcons';
+import { buildExportLesson } from '@/lib/export/lesson';
+import { PrintableLesson } from '@/components/export/PrintableLesson';
 import { PackContentView } from './PackContentView';
 
 export const metadata = { title: 'Lesson pack' };
@@ -67,14 +69,20 @@ export default async function PackDetailPage({
 
       {/* Generated content (tabbed) */}
       {pack.content ? (
-        <PackContentView
-          content={pack.content}
-          meta={{
-            learningObjectives: pack.learning_objectives,
-            teacherNotesInput: pack.teacher_notes_input,
-            createdAt: pack.created_at,
-          }}
-        />
+        <>
+          <PackContentView
+            content={pack.content}
+            packId={pack.id}
+            title={pack.topic}
+            meta={{
+              learningObjectives: pack.learning_objectives,
+              teacherNotesInput: pack.teacher_notes_input,
+              createdAt: pack.created_at,
+            }}
+          />
+          {/* Hidden on screen; used by "Print Lesson" (window.print). */}
+          <PrintableLesson lesson={buildExportLesson(pack)} />
+        </>
       ) : (
         <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
           <p className="text-sm text-zinc-600 dark:text-zinc-300">

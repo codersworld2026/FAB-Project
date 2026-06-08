@@ -4,6 +4,7 @@ import { getUsageSummary } from '@/lib/subscription';
 import { listPacks } from '@/lib/packs';
 import { Badge } from '@/components/ui';
 import { QuickTemplates } from '@/components/dashboard/QuickTemplates';
+import { QuickExportButton } from '@/components/export/QuickExportButton';
 import { DnaIcon, MoleculeIcon, SparkleIcon, CellIcon } from '@/components/science/ScienceIcons';
 
 export const metadata = { title: 'Dashboard' };
@@ -81,6 +82,7 @@ export default async function DashboardPage() {
                     <th className="px-5 py-3 font-medium">Level</th>
                     <th className="px-5 py-3 font-medium">Status</th>
                     <th className="px-5 py-3 font-medium">Created</th>
+                    <th className="px-5 py-3 text-right font-medium">Export</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -105,6 +107,11 @@ export default async function DashboardPage() {
                           ? new Date(pack.created_at).toLocaleDateString('en-GB')
                           : ''}
                       </td>
+                      <td className="px-5 py-3 text-right">
+                        {pack.id && pack.topic ? (
+                          <QuickExportButton packId={pack.id} title={pack.topic} />
+                        ) : null}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -123,24 +130,26 @@ function PackTile({
   pack: Awaited<ReturnType<typeof listPacks>>[number];
 }) {
   return (
-    <Link
-      href={`/dashboard/packs/${pack.id}`}
-      className="group block rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-violet-800"
-    >
-      <div className="flex items-start justify-between gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300">
-          <CellIcon className="h-5 w-5" />
+    <div className="group rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-violet-800">
+      <Link href={`/dashboard/packs/${pack.id}`} className="block">
+        <div className="flex items-start justify-between gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300">
+            <CellIcon className="h-5 w-5" />
+          </span>
+          <ReviewBadge status={pack.review_status} />
+        </div>
+        <p className="mt-3 font-display text-[15px] font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{pack.topic}</p>
+        <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
+          {pack.course_level} · {pack.ability_level}
+        </p>
+      </Link>
+      <div className="mt-3 flex items-center justify-between">
+        <span className="text-xs text-zinc-400 dark:text-zinc-500">
+          {pack.created_at ? new Date(pack.created_at).toLocaleDateString('en-GB') : ''}
         </span>
-        <ReviewBadge status={pack.review_status} />
+        {pack.id && pack.topic ? <QuickExportButton packId={pack.id} title={pack.topic} /> : null}
       </div>
-      <p className="mt-3 font-display text-[15px] font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{pack.topic}</p>
-      <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
-        {pack.course_level} · {pack.ability_level}
-      </p>
-      <p className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">
-        {pack.created_at ? new Date(pack.created_at).toLocaleDateString('en-GB') : ''}
-      </p>
-    </Link>
+    </div>
   );
 }
 
