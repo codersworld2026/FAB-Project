@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lesson Pack Generator",
-    template: "%s · Lesson Pack Generator",
+    default: "Lessons Generator — AI lessons for teachers",
+    template: "%s · Lessons Generator",
   },
   description:
-    "Generate original, exam-style Biology lesson resource packs for teachers — downloadable as PDF and PowerPoint.",
+    "Create teacher-ready lessons in seconds. Generate slides, worksheets, quizzes, lesson plans and assessments — built for real classrooms and aligned to standards.",
 };
 
 export default function RootLayout({

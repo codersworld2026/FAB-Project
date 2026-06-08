@@ -24,7 +24,7 @@ export const GENERATION_STATUSES = [
 export type GenerationStatus = (typeof GENERATION_STATUSES)[number];
 
 export const APP_CONFIG = {
-  name: process.env.NEXT_PUBLIC_APP_NAME ?? 'Lesson Pack Generator',
+  name: process.env.NEXT_PUBLIC_APP_NAME ?? 'Lessons Generator',
   url: process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
   supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'support@example.com',
 

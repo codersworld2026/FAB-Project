@@ -35,7 +35,7 @@ export default async function DashboardPage() {
 
         {recentPacks.length === 0 ? (
           <Card className="flex flex-col items-center justify-center py-14 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-100">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-violet-50 text-violet-700 ring-1 ring-inset ring-violet-100">
               <DocIcon />
             </div>
             <p className="mt-4 text-base font-semibold text-zinc-900">
@@ -94,7 +94,7 @@ export default async function DashboardPage() {
                       <td className="px-5 py-3">
                         <Link
                           href={`/dashboard/packs/${pack.id}`}
-                          className="font-medium text-emerald-700 hover:underline"
+                          className="font-medium text-violet-700 hover:underline"
                         >
                           {pack.topic}
                         </Link>
@@ -136,7 +136,7 @@ function UsageCard({
           </p>
           <p className="text-sm text-zinc-500">Unlimited lesson packs.</p>
         </div>
-        <Badge color="emerald">Subscribed</Badge>
+        <Badge color="violet">Subscribed</Badge>
       </Card>
     );
   }
@@ -163,7 +163,7 @@ function UsageCard({
       </div>
       <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-zinc-100">
         <div
-          className={exhausted ? 'h-full bg-amber-500' : 'h-full bg-emerald-600'}
+          className={exhausted ? 'h-full bg-amber-500' : 'h-full bg-violet-600'}
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -172,7 +172,7 @@ function UsageCard({
 }
 
 function ReviewBadge({ status }: { status?: string }) {
-  if (status === 'approved') return <Badge color="emerald">Approved</Badge>;
+  if (status === 'approved') return <Badge color="violet">Approved</Badge>;
   if (status === 'needs_review') return <Badge color="amber">Needs review</Badge>;
   return <Badge>Draft</Badge>;
 }

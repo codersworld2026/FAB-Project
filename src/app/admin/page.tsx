@@ -15,7 +15,7 @@ export default async function AdminPage() {
       <div>
         <Link
           href="/dashboard"
-          className="text-sm font-medium text-emerald-700 hover:underline"
+          className="text-sm font-medium text-violet-700 hover:underline"
         >
           ← Back to dashboard
         </Link>

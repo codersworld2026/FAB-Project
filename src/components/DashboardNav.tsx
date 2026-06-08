@@ -40,7 +40,7 @@ export function DashboardNav({
         <div className="flex items-center gap-6">
           <Link
             href="/dashboard"
-            className="text-lg font-bold tracking-tight text-emerald-700"
+            className="text-lg font-bold tracking-tight text-violet-700"
           >
             {APP_CONFIG.name}
           </Link>
@@ -52,7 +52,7 @@ export function DashboardNav({
                 className={clsx(
                   'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
                   isActive(item.href)
-                    ? 'bg-emerald-50 text-emerald-700'
+                    ? 'bg-violet-50 text-violet-700'
                     : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900',
                 )}
               >
@@ -100,7 +100,7 @@ export function DashboardNav({
                 className={clsx(
                   'rounded-lg px-3 py-2 text-sm font-medium',
                   isActive(item.href)
-                    ? 'bg-emerald-50 text-emerald-700'
+                    ? 'bg-violet-50 text-violet-700'
                     : 'text-zinc-700 hover:bg-zinc-100',
                 )}
               >

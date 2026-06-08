@@ -18,10 +18,10 @@ export default async function LoginPage({
       </p>
       <LoginForm redirectTo={redirect} initialError={error ? 'Please sign in again.' : undefined} />
       <div className="mt-6 flex items-center justify-between text-sm">
-        <Link href="/forgot-password" className="text-emerald-700 hover:underline">
+        <Link href="/forgot-password" className="text-violet-700 hover:underline">
           Forgot password?
         </Link>
-        <Link href="/signup" className="text-emerald-700 hover:underline">
+        <Link href="/signup" className="text-violet-700 hover:underline">
           Create an account
         </Link>
       </div>

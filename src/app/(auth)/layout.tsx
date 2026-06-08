@@ -11,7 +11,7 @@ export default function AuthLayout({
       <div className="flex flex-1 flex-col items-center justify-center px-4 py-12">
         <Link
           href="/"
-          className="mb-8 text-xl font-bold tracking-tight text-emerald-700"
+          className="mb-8 text-xl font-bold tracking-tight text-violet-700"
         >
           {APP_CONFIG.name}
         </Link>

@@ -31,7 +31,7 @@ export default async function AccountPage() {
         {usage?.isSubscribed ? (
           <div className="flex items-center justify-between">
             <span className="text-sm text-zinc-700">Active subscription</span>
-            <Badge color="emerald">Subscribed</Badge>
+            <Badge color="violet">Subscribed</Badge>
           </div>
         ) : (
           <div className="space-y-3">
@@ -44,7 +44,7 @@ export default async function AccountPage() {
             {usage ? (
               <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
                 <div
-                  className="h-full bg-emerald-600"
+                  className="h-full bg-violet-600"
                   style={{
                     width: `${Math.min(100, Math.round((usage.used / usage.limit) * 100))}%`,
                   }}
@@ -65,7 +65,7 @@ export default async function AccountPage() {
           Need help? Email{' '}
           <a
             href={`mailto:${APP_CONFIG.supportEmail}`}
-            className="font-medium text-emerald-700 hover:underline"
+            className="font-medium text-violet-700 hover:underline"
           >
             {APP_CONFIG.supportEmail}
           </a>

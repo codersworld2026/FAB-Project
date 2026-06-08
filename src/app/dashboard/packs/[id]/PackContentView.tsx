@@ -23,7 +23,7 @@ export function PackContentView({ content }: { content: PackContent }) {
         <div className="space-y-3">
           {content.lessonPlan.sections.map((s, i) => (
             <div key={i} className="flex gap-3">
-              <div className="w-16 shrink-0 text-xs font-medium text-emerald-700">
+              <div className="w-16 shrink-0 text-xs font-medium text-violet-700">
                 {s.durationMins ? `${s.durationMins} min` : ''}
               </div>
               <div>
@@ -85,7 +85,7 @@ export function PackContentView({ content }: { content: PackContent }) {
                 ))}
               </ol>
               <details className="mt-2">
-                <summary className="cursor-pointer text-xs font-medium text-emerald-700">
+                <summary className="cursor-pointer text-xs font-medium text-violet-700">
                   Answer key
                 </summary>
                 <ol className="mt-1 list-decimal space-y-1 pl-5 text-xs text-zinc-600">
@@ -174,8 +174,8 @@ function Section({
   );
 }
 
-function worksheetColor(level: string): 'blue' | 'zinc' | 'emerald' {
+function worksheetColor(level: string): 'blue' | 'zinc' | 'violet' {
   if (level === 'Foundation') return 'blue';
-  if (level === 'Mastery') return 'emerald';
+  if (level === 'Mastery') return 'violet';
   return 'zinc';
 }

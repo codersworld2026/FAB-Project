@@ -12,7 +12,7 @@ export default function LegalLayout({
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
           <Link
             href="/"
-            className="text-lg font-bold tracking-tight text-emerald-700"
+            className="text-lg font-bold tracking-tight text-violet-700"
           >
             {APP_CONFIG.name}
           </Link>
@@ -27,7 +27,7 @@ export default function LegalLayout({
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 sm:px-6">
         <article
-          className="text-zinc-700 [&_a]:font-medium [&_a]:text-emerald-700 [&_a]:underline [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-zinc-900 [&_h2]:mt-8 [&_h2]:mb-2 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-zinc-900 [&_li]:mt-1 [&_p]:mt-3 [&_p]:text-sm [&_p]:leading-relaxed [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:text-sm"
+          className="text-zinc-700 [&_a]:font-medium [&_a]:text-violet-700 [&_a]:underline [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-zinc-900 [&_h2]:mt-8 [&_h2]:mb-2 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-zinc-900 [&_li]:mt-1 [&_p]:mt-3 [&_p]:text-sm [&_p]:leading-relaxed [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:text-sm"
         >
           {children}
         </article>

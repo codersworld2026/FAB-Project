@@ -2,8 +2,8 @@
 
 /* ------------------------------------------------------------------ *
  * Design tokens
- * Single, well-executed light theme (professional SaaS for teachers).
- * Brand = emerald; neutrals = zinc. Used via Tailwind utilities.
+ * Single, well-executed light theme (modern SaaS for teachers).
+ * Brand = violet/purple; neutrals = zinc. Used via Tailwind utilities.
  * ------------------------------------------------------------------ */
 @theme inline {
   --color-background: #ffffff;
@@ -28,14 +28,14 @@
 
   /* Consistent, visible keyboard focus across the app. */
   :focus-visible {
-    outline: 2px solid #059669; /* emerald-600 */
+    outline: 2px solid #7c3aed; /* violet-600 */
     outline-offset: 2px;
     border-radius: 4px;
   }
 
   ::selection {
-    background-color: #a7f3d0; /* emerald-200 */
-    color: #064e3b; /* emerald-900 */
+    background-color: #ddd6fe; /* violet-200 */
+    color: #4c1d95; /* violet-900 */
   }
 
   /* Balanced headings; tighter tracking for a polished feel. */

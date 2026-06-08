@@ -32,7 +32,7 @@ export default async function PackDetailPage({
       <div>
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-1 text-sm font-medium text-emerald-700 hover:underline"
+          className="inline-flex items-center gap-1 text-sm font-medium text-violet-700 hover:underline"
         >
           ← Back to dashboard
         </Link>
@@ -121,7 +121,7 @@ function DisabledDownload({ children }: { children: React.ReactNode }) {
 }
 
 function ReviewBadge({ status }: { status: string }) {
-  if (status === 'approved') return <Badge color="emerald">Approved</Badge>;
+  if (status === 'approved') return <Badge color="violet">Approved</Badge>;
   if (status === 'needs_review') return <Badge color="amber">Needs review</Badge>;
   return <Badge>Draft</Badge>;
 }
