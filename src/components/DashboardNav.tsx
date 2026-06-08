@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOutAction } from '@/app/auth/actions';
 import { APP_CONFIG } from '@/lib/config';
+import { LogoMark } from '@/components/landing/MarketingHeader';
 import { clsx } from './clsx';
 
 interface NavItem {
@@ -35,14 +36,17 @@ export function DashboardNav({
       : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-zinc-200 bg-white">
+    <header className="sticky top-0 z-20 border-b border-zinc-200 bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-6">
           <Link
             href="/dashboard"
-            className="text-lg font-bold tracking-tight text-violet-700"
+            className="flex items-center gap-2.5"
           >
-            {APP_CONFIG.name}
+            <LogoMark />
+            <span className="hidden text-lg font-bold tracking-tight text-zinc-900 sm:inline">
+              {APP_CONFIG.name}
+            </span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
             {items.map((item) => (

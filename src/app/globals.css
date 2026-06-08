@@ -1,21 +1,82 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- * Design tokens
- * Single, well-executed light theme (modern SaaS for teachers).
- * Brand = violet/purple; neutrals = zinc. Used via Tailwind utilities.
+ * Lessons Generator — premium science/education design system.
+ *
+ * Identity:
+ *   base       violet / purple   (violet-600 #7c3aed)
+ *   highlight  electric cyan/sky (cyan-400 #22d3ee, sky-500)
+ *   accent     coral / pink      (rose-400, pink-500)
+ *   surfaces   clean white cards on soft tinted washes
+ *
+ * Built entirely on Tailwind's default palette + a small set of named
+ * animations (registered below) so no extra runtime deps are needed.
+ * Motion is applied in components via `motion-safe:` so it respects
+ * `prefers-reduced-motion` automatically.
  * ------------------------------------------------------------------ */
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #18181b; /* zinc-900 */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Brand shortcuts (so `bg-brand`, `text-brand` read well in markup). */
+  --color-brand: #7c3aed; /* violet-600 */
+  --color-brand-dark: #6d28d9; /* violet-700 */
+  --color-cyan-glow: #22d3ee; /* cyan-400 */
+  --color-coral: #fb7185; /* rose-400 */
+
+  /* Named animations → usable as `animate-float`, `motion-safe:animate-blob`, … */
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 11s ease-in-out infinite;
+  --animate-blob: blob 16s ease-in-out infinite;
+  --animate-gradient: gradient-pan 9s ease infinite;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-spin-slow: spin 26s linear infinite;
+  --animate-pulse-soft: pulse-soft 4s ease-in-out infinite;
+  --animate-draw: draw 2.4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(24px, -18px) scale(1.07); }
+  66% { transform: translate(-18px, 14px) scale(0.95); }
+}
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes draw {
+  0% { stroke-dashoffset: 120; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -120; }
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -30,7 +91,7 @@
   :focus-visible {
     outline: 2px solid #7c3aed; /* violet-600 */
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   ::selection {
@@ -44,5 +105,52 @@
   h3 {
     text-wrap: balance;
     letter-spacing: -0.02em;
+  }
+
+  /* Respect reduced-motion globally as a safety net. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Animated multi-stop brand gradient text (for hero highlights). */
+  .text-gradient-brand {
+    background-image: linear-gradient(
+      100deg,
+      #7c3aed 0%,
+      #6366f1 25%,
+      #06b6d4 55%,
+      #ec4899 85%,
+      #7c3aed 100%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Tasteful glassmorphism surface. */
+  .glass {
+    background-color: color-mix(in srgb, white 72%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* Subtle dotted "lab grid" backdrop for section washes. */
+  .bg-lab-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(124, 58, 237, 0.12) 1px,
+      transparent 0
+    );
+    background-size: 22px 22px;
   }
 }

@@ -11,9 +11,9 @@ export function MarketingFooter() {
           <span className="font-bold text-zinc-800">{APP_CONFIG.name}</span>
         </Link>
         <nav className="flex flex-wrap items-center justify-center gap-5">
-          <a href="#features" className="hover:text-violet-700">Teachers</a>
-          <a href="#how" className="hover:text-violet-700">Schools</a>
-          <a href="#cta" className="hover:text-violet-700">Pricing</a>
+          <a href="#pack" className="hover:text-violet-700">What&apos;s included</a>
+          <a href="#how" className="hover:text-violet-700">How it works</a>
+          <a href="#departments" className="hover:text-violet-700">Subjects</a>
           <Link href="/privacy" className="hover:text-violet-700">Privacy</Link>
           <Link href="/terms" className="hover:text-violet-700">Terms</Link>
           <a href={`mailto:${APP_CONFIG.supportEmail}`} className="hover:text-violet-700">

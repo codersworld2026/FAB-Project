@@ -8,13 +8,16 @@ export function Button({
   size = 'md',
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'gradient';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }) {
   const variants: Record<string, string> = {
     // violet-700 on white gives WCAG-AA contrast for the label.
     primary:
       'bg-violet-700 text-white shadow-sm hover:bg-violet-800 disabled:bg-violet-700/50',
+    // Rich brand gradient — used for primary marketing/app CTAs.
+    gradient:
+      'bg-gradient-to-r from-violet-600 via-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/35 hover:brightness-[1.05] disabled:opacity-60',
     secondary:
       'bg-white text-zinc-800 border border-zinc-300 shadow-sm hover:bg-zinc-50 hover:border-zinc-400',
     ghost: 'bg-transparent text-zinc-700 hover:bg-zinc-100',
@@ -24,11 +27,12 @@ export function Button({
     sm: 'h-9 px-3 text-sm',
     md: 'h-10 px-4 text-sm',
     lg: 'h-12 px-6 text-base',
+    xl: 'h-13 px-7 text-base',
   };
   return (
     <button
       className={clsx(
-        'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-80',
+        'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-80',
         sizes[size],
         variants[variant],
         className,

@@ -10,7 +10,7 @@ export default async function DashboardLayout({
   const profile = await requireProfile();
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-gradient-to-b from-violet-50/50 to-zinc-50">
       {isPreviewMode() ? (
         <div className="bg-amber-100 px-4 py-2 text-center text-xs font-medium text-amber-900">
           Preview mode — sample data shown (no login required). Real auth and

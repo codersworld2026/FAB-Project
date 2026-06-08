@@ -6,10 +6,10 @@ import { APP_CONFIG } from '@/lib/config';
 import { clsx } from '@/components/clsx';
 
 const NAV = [
-  { label: 'Teachers', href: '#features' },
-  { label: 'Schools', href: '#how' },
-  { label: 'Pricing', href: '#cta' },
-  { label: 'Contact us', href: `mailto:${APP_CONFIG.supportEmail}` },
+  { label: "What's included", href: '#pack' },
+  { label: 'How it works', href: '#how' },
+  { label: 'Subjects', href: '#departments' },
+  { label: 'Contact', href: `mailto:${APP_CONFIG.supportEmail}` },
 ];
 
 export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
@@ -47,7 +47,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
         <div className="flex items-center gap-2">
           <Link
             href={loggedIn ? '/dashboard' : '/signup'}
-            className="hidden rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-violet-700 sm:inline-flex"
+            className="hidden rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/35 sm:inline-flex"
           >
             {loggedIn ? 'Dashboard' : 'Sign up free'}
           </Link>
@@ -95,7 +95,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
             href={loggedIn ? '/dashboard' : '/signup'}
             onClick={() => setOpen(false)}
             tabIndex={open ? 0 : -1}
-            className="mt-1 flex min-h-12 items-center justify-center rounded-xl bg-violet-600 px-4 text-[15px] font-semibold text-white shadow-sm transition-colors hover:bg-violet-700"
+            className="mt-1 flex min-h-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 text-[15px] font-semibold text-white shadow-sm transition-colors hover:brightness-105"
           >
             {loggedIn ? 'Go to dashboard' : 'Sign up free'}
           </Link>

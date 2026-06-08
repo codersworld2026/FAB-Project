@@ -2,11 +2,11 @@ import { getUser } from '@/lib/auth';
 import { isPreviewMode } from '@/lib/preview';
 import { MarketingHeader } from '@/components/landing/MarketingHeader';
 import { Hero } from '@/components/landing/Hero';
-import { FeaturesSection } from '@/components/landing/FeaturesSection';
+import { BuiltForTeachers } from '@/components/landing/BuiltForTeachers';
+import { WhatYouGet } from '@/components/landing/WhatYouGet';
 import { HowItWorks } from '@/components/landing/HowItWorks';
-import { ExampleLessonPreview } from '@/components/landing/ExampleLessonPreview';
+import { ScienceDepartments } from '@/components/landing/ScienceDepartments';
 import { CTASection } from '@/components/landing/CTASection';
-import { StatsRow } from '@/components/landing/StatsRow';
 import { MarketingFooter } from '@/components/landing/MarketingFooter';
 
 export default async function HomePage() {
@@ -20,11 +20,11 @@ export default async function HomePage() {
       <MarketingHeader loggedIn={loggedIn} />
       <main className="flex-1">
         <Hero ctaHref={ctaHref} />
-        <FeaturesSection />
-        <HowItWorks />
-        <ExampleLessonPreview ctaHref={ctaHref} />
+        <BuiltForTeachers />
+        <WhatYouGet />
+        <HowItWorks ctaHref={ctaHref} />
+        <ScienceDepartments />
         <CTASection ctaHref={ctaHref} />
-        <StatsRow />
       </main>
       <MarketingFooter />
     </div>
