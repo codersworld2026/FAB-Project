@@ -68,7 +68,7 @@ export function HowItWorks({ ctaHref }: { ctaHref: string }) {
         <div className="mt-10 flex justify-center">
           <Link
             href={ctaHref}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-xl"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 font-display text-base font-bold text-white shadow-lg shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-xl"
           >
             Create your first pack <span aria-hidden="true">→</span>
           </Link>

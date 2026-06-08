@@ -16,7 +16,7 @@ export default async function HomePage() {
   const ctaHref = loggedIn ? '/dashboard/generate' : '/signup';
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-white dark:bg-zinc-950">
       <MarketingHeader loggedIn={loggedIn} />
       <main className="flex-1">
         <Hero ctaHref={ctaHref} />

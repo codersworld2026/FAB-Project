@@ -35,7 +35,7 @@ export default async function DashboardPage() {
           </p>
           <Link
             href="/dashboard/generate"
-            className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3 text-base font-bold text-violet-700 shadow-md transition-transform hover:scale-[1.02]"
+            className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3 font-display text-base font-bold text-violet-700 shadow-md transition-transform hover:scale-[1.02]"
           >
             <SparkleIcon className="h-4 w-4" /> Generate a lesson pack
           </Link>
@@ -133,7 +133,7 @@ function PackTile({
         </span>
         <ReviewBadge status={pack.review_status} />
       </div>
-      <p className="mt-3 font-bold text-zinc-900 dark:text-zinc-50">{pack.topic}</p>
+      <p className="mt-3 font-display text-[15px] font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{pack.topic}</p>
       <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
         {pack.course_level} · {pack.ability_level}
       </p>
@@ -157,7 +157,7 @@ function EmptyState() {
       </p>
       <Link
         href="/dashboard/generate"
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-transform hover:scale-[1.02]"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 font-display text-base font-bold text-white shadow-lg shadow-violet-500/25 transition-transform hover:scale-[1.02]"
       >
         <SparkleIcon className="h-4 w-4" /> Generate your first pack
       </Link>

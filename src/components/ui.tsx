@@ -32,7 +32,7 @@ export function Button({
   return (
     <button
       className={clsx(
-        'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-80',
+        'inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-80',
         sizes[size],
         variants[variant],
         className,
@@ -96,7 +96,7 @@ export function Label({
 }: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label
-      className={clsx('mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300', className)}
+      className={clsx('mb-1.5 block text-sm font-semibold text-zinc-700 dark:text-zinc-200', className)}
       {...props}
     />
   );

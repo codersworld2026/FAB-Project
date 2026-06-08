@@ -12,7 +12,7 @@ export default function LegalLayout({
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
           <Link
             href="/"
-            className="text-lg font-bold tracking-tight text-violet-700 dark:text-violet-300"
+            className="font-display text-lg font-extrabold tracking-tight text-violet-700 dark:text-violet-300"
           >
             {APP_CONFIG.name}
           </Link>

@@ -29,7 +29,7 @@ export function QuickTemplates() {
             <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${accent}`}>
               <Icon className="h-5 w-5" />
             </span>
-            <p className="mt-3 text-sm font-bold text-zinc-900 dark:text-zinc-50">{label}</p>
+            <p className="mt-3 font-display text-sm font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{label}</p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">{sub}</p>
             <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-violet-700 opacity-0 transition-opacity group-hover:opacity-100 dark:text-violet-300">
               Start <span aria-hidden="true">→</span>

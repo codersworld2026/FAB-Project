@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Sora, Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeScript } from "@/components/ThemeScript";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Headings — Sora: modern, geometric, confident.
+const sora = Sora({
   subsets: ["latin"],
+  variable: "--font-heading",
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Body / UI — Manrope: clean, highly readable for long text and dense UI.
+const manrope = Manrope({
   subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +37,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${sora.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ThemeScript />

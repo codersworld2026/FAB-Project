@@ -21,8 +21,12 @@
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #18181b; /* zinc-900 */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Type pairing — Sora (headings) + Manrope (body/UI), self-hosted via next/font.
+   * `font-sans` (default body) = Manrope; `font-display` = Sora. */
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), var(--font-body), ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
   /* Brand shortcuts (so `bg-brand`, `text-brand` read well in markup). */
   --color-brand: #7c3aed; /* violet-600 */
@@ -87,9 +91,20 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    /* Comfortable reading defaults — Manrope 15px (→16px from sm up), line 1.6. */
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.6;
+    letter-spacing: -0.006em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  @media (min-width: 640px) {
+    body {
+      font-size: 1rem; /* 16px on larger screens */
+    }
   }
 
   /* Dark theme base — deep zinc canvas with soft light text. */
@@ -117,12 +132,30 @@
     color: #ede9fe; /* violet-100 */
   }
 
-  /* Balanced headings; tighter tracking for a polished feel. */
+  /* Headings — Sora, heavier weight, tight tracking, balanced wrapping. */
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.15;
     text-wrap: balance;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+  }
+
+  /* Buttons & tabs read as UI "display" type for a confident, premium feel. */
+  button,
+  [role="tab"] {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  /* Long-form prose (legal pages) stays in the readable body face. */
+  article p,
+  article li {
+    font-family: var(--font-sans);
+    letter-spacing: -0.006em;
   }
 
   /* Respect reduced-motion globally as a safety net. */

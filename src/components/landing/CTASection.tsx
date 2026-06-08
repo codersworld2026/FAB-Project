@@ -26,7 +26,7 @@ export function CTASection({ ctaHref }: { ctaHref: string }) {
           <div className="mt-8 flex flex-col items-center gap-3">
             <Link
               href={ctaHref}
-              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-white px-7 py-3.5 text-base font-bold text-violet-700 shadow-lg transition-transform hover:scale-[1.02] sm:w-auto"
+              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-white px-7 py-3.5 font-display text-base font-bold text-violet-700 shadow-lg transition-transform hover:scale-[1.02] sm:w-auto"
             >
               Generate your first lesson pack
               <span aria-hidden="true">→</span>

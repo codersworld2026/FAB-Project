@@ -45,7 +45,7 @@ export function DashboardNav({
             className="flex items-center gap-2.5"
           >
             <LogoMark />
-            <span className="hidden text-lg font-bold tracking-tight text-zinc-900 sm:inline dark:text-zinc-50">
+            <span className="hidden font-display text-lg font-extrabold tracking-tight text-zinc-900 sm:inline dark:text-zinc-50">
               {APP_CONFIG.name}
             </span>
           </Link>

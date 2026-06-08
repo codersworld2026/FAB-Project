@@ -18,7 +18,7 @@ export default function AuthLayout({
       <div className="relative flex flex-1 flex-col items-center justify-center px-4 py-12">
         <Link href="/" className="mb-8 flex items-center gap-2.5">
           <LogoMark />
-          <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+          <span className="font-display text-xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
             {APP_CONFIG.name}
           </span>
         </Link>

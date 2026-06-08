@@ -48,14 +48,14 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <Link
               href={ctaHref}
-              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/40 sm:w-auto"
+              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3.5 font-display text-base font-bold text-white shadow-lg shadow-violet-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/40 sm:w-auto"
             >
               Create a lesson pack
               <span aria-hidden="true">→</span>
             </Link>
             <a
               href="#how"
-              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl border border-violet-200 bg-white/80 px-6 py-3.5 text-base font-semibold text-zinc-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 sm:w-auto dark:border-zinc-700 dark:bg-zinc-800/70 dark:text-zinc-100 dark:hover:border-violet-700 dark:hover:text-violet-300"
+              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl border border-violet-200 bg-white/80 px-6 py-3.5 font-display text-base font-bold text-zinc-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 sm:w-auto dark:border-zinc-700 dark:bg-zinc-800/70 dark:text-zinc-100 dark:hover:border-violet-700 dark:hover:text-violet-300"
             >
               See how it works
             </a>

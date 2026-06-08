@@ -21,7 +21,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
           <LogoMark />
-          <span className="text-base font-bold tracking-tight text-zinc-900 sm:text-lg dark:text-zinc-50">
+          <span className="font-display text-base font-extrabold tracking-tight text-zinc-900 sm:text-lg dark:text-zinc-50">
             {APP_CONFIG.name}
           </span>
         </Link>
@@ -49,7 +49,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
           <ThemeToggle className="hidden sm:inline-flex" />
           <Link
             href={loggedIn ? '/dashboard' : '/signup'}
-            className="hidden rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/35 sm:inline-flex"
+            className="hidden rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 font-display text-sm font-bold text-white shadow-sm shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/35 sm:inline-flex"
           >
             {loggedIn ? 'Dashboard' : 'Sign up free'}
           </Link>
@@ -103,7 +103,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
             href={loggedIn ? '/dashboard' : '/signup'}
             onClick={() => setOpen(false)}
             tabIndex={open ? 0 : -1}
-            className="mt-1 flex min-h-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 text-[15px] font-semibold text-white shadow-sm transition-colors hover:brightness-105"
+            className="mt-1 flex min-h-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 font-display text-[15px] font-bold text-white shadow-sm transition-colors hover:brightness-105"
           >
             {loggedIn ? 'Go to dashboard' : 'Sign up free'}
           </Link>
