@@ -1,0 +1,130 @@
+import type { GenerationStatus, ReviewStatus } from './config';
+
+export type UserRole = 'teacher' | 'owner';
+
+export interface Profile {
+  id: string;
+  email: string;
+  full_name: string | null;
+  school: string | null;
+  role: UserRole;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Pack {
+  id: string;
+  user_id: string;
+  topic: string;
+  subject: string;
+  exam_board: string;
+  course_level: string;
+  ability_level: string;
+  lesson_length: string | null;
+  learning_objectives: string | null;
+  teacher_notes_input: string | null;
+  content: PackContent | null;
+  model: string | null;
+  generation_status: GenerationStatus;
+  generation_error: string | null;
+  review_status: ReviewStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export type WorksheetLevel = 'Foundation' | 'Standard' | 'Mastery';
+
+export interface LessonPlanSection {
+  title: string;
+  durationMins?: number;
+  detail: string;
+}
+
+export interface Slide {
+  title: string;
+  bullets: string[];
+  teacherNotes?: string;
+}
+
+export interface WorksheetQuestion {
+  prompt: string;
+  marks?: number;
+}
+
+export interface Worksheet {
+  level: WorksheetLevel;
+  title: string;
+  intro?: string;
+  questions: WorksheetQuestion[];
+  answers: string[];
+}
+
+export interface AssessmentQuestion {
+  prompt: string;
+  marks: number;
+}
+
+export interface MarkSchemeItem {
+  questionRef: string;
+  answer: string;
+  marks: number;
+}
+
+/**
+ * Structured generated content — the SOURCE OF TRUTH for a pack. The PDF and
+ * PowerPoint exports (M5) are rendered from this shape. Produced by the
+ * generator (mock now, Anthropic later).
+ */
+export interface PackContent {
+  overview: {
+    summary: string;
+    objectives: string[];
+  };
+  lessonPlan: {
+    sections: LessonPlanSection[];
+  };
+  slides: Slide[];
+  worksheets: Worksheet[]; // exactly three: Foundation, Standard, Mastery
+  assessment: {
+    questions: AssessmentQuestion[];
+  };
+  markScheme: MarkSchemeItem[];
+  teacherNotes: {
+    misconceptions: string[];
+    teachingPoints: string[];
+    safety?: string;
+  };
+}
+
+export interface PromptTemplate {
+  key: string;
+  label: string;
+  description: string | null;
+  content: string;
+  updated_at: string;
+  updated_by: string | null;
+}
+
+export interface Subscription {
+  user_id: string;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  status: string; // free|trialing|active|past_due|canceled
+  price_id: string | null;
+  current_period_end: string | null;
+  updated_at: string;
+}
+
+export interface UsageLog {
+  id: string;
+  user_id: string | null;
+  pack_id: string | null;
+  event: string;
+  success: boolean;
+  input_tokens: number | null;
+  output_tokens: number | null;
+  cost_usd: number | null;
+  error: string | null;
+  metadata: Record<string, unknown> | null;
+  created_at: string;
+}

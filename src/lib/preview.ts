@@ -1,0 +1,95 @@
+import { isSupabaseConfigured } from './supabase/env';
+import type { UsageSummary } from './subscription';
+import type { Pack, Profile } from './types';
+
+/**
+ * Preview mode: when Supabase isn't configured yet (no keys), the protected
+ * pages render with sample data instead of redirecting to login. This lets the
+ * customer see the full UI before any backend exists. As soon as real Supabase
+ * keys are added, `isSupabaseConfigured()` becomes true and real auth + data
+ * take over automatically.
+ */
+export function isPreviewMode(): boolean {
+  return !isSupabaseConfigured();
+}
+
+export const PREVIEW_PROFILE: Profile = {
+  id: 'preview-user',
+  email: 'demo@school.example',
+  full_name: 'Demo Teacher',
+  school: 'Springfield International School',
+  role: 'owner', // owner so the Admin page is also viewable in preview
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+};
+
+export const PREVIEW_USAGE: UsageSummary = {
+  used: 1,
+  limit: 3,
+  remaining: 2,
+  status: 'free',
+  isSubscribed: false,
+  canGenerate: true,
+};
+
+export const PREVIEW_PACKS: Pack[] = [
+  {
+    id: 'preview-pack-1',
+    user_id: 'preview-user',
+    topic: 'Photosynthesis',
+    subject: 'Biology',
+    exam_board: 'Edexcel',
+    course_level: 'IGCSE',
+    ability_level: 'Mixed',
+    lesson_length: '60 minutes',
+    learning_objectives:
+      'Describe the process of photosynthesis and the factors affecting its rate.',
+    teacher_notes_input: 'Period 4, low-energy class — needs a strong starter.',
+    content: null,
+    model: 'claude-sonnet-4-6',
+    generation_status: 'complete',
+    generation_error: null,
+    review_status: 'approved',
+    created_at: '2026-06-05T09:15:00.000Z',
+    updated_at: '2026-06-05T09:16:00.000Z',
+  },
+  {
+    id: 'preview-pack-2',
+    user_id: 'preview-user',
+    topic: 'Enzymes and digestion',
+    subject: 'Biology',
+    exam_board: 'Edexcel',
+    course_level: 'GCSE',
+    ability_level: 'Foundation',
+    lesson_length: '50 minutes',
+    learning_objectives: 'Explain how enzymes break down food in digestion.',
+    teacher_notes_input: null,
+    content: null,
+    model: 'claude-sonnet-4-6',
+    generation_status: 'complete',
+    generation_error: null,
+    review_status: 'needs_review',
+    created_at: '2026-06-06T13:40:00.000Z',
+    updated_at: '2026-06-06T13:41:00.000Z',
+  },
+  {
+    id: 'preview-pack-3',
+    user_id: 'preview-user',
+    topic: 'The heart and circulatory system',
+    subject: 'Biology',
+    exam_board: 'Edexcel',
+    course_level: 'A-Level',
+    ability_level: 'Mastery',
+    lesson_length: '90 minutes (double)',
+    learning_objectives:
+      'Analyse the structure of the heart and the cardiac cycle.',
+    teacher_notes_input: 'Include an exam-style 6-marker.',
+    content: null,
+    model: 'claude-sonnet-4-6',
+    generation_status: 'complete',
+    generation_error: null,
+    review_status: 'draft',
+    created_at: '2026-06-07T08:05:00.000Z',
+    updated_at: '2026-06-07T08:06:00.000Z',
+  },
+];
