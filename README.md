@@ -19,7 +19,7 @@ assessment, mark scheme and teacher notes — downloadable as **PDF** and
 | PDF export | `@react-pdf/renderer` |
 | PowerPoint export | `pptxgenjs` |
 | Payments | Stripe (Checkout + Customer Portal + webhooks) |
-| Hosting | Vercel (recommended) |
+| Hosting | Firebase App Hosting (Cloud Run + CDN) |
 
 ## Project status
 
@@ -95,40 +95,41 @@ See `.env.example` for the full annotated list. Summary:
   `NEXT_PUBLIC_SUPPORT_EMAIL` — app config
 - `FREE_TRIAL_PACK_LIMIT`, `NEXT_PUBLIC_DEFAULT_EXAM_BOARD` — business defaults
 
-## Deployment (Cloudflare Workers)
+## Deployment (Firebase App Hosting)
 
-Deployed to Cloudflare via the [OpenNext](https://opennext.js.org/cloudflare)
-adapter (`@opennextjs/cloudflare`). Config lives in `wrangler.jsonc` and
-`open-next.config.ts`.
+This is a **server-rendered** Next.js app (server actions, dynamic routes,
+cookie auth), so it deploys on **Firebase App Hosting** — which builds the app
+and runs it on Cloud Run behind Firebase's CDN. (Classic Firebase Hosting with a
+static `public/` folder does **not** work for an SSR app and would break the
+generator/login.)
 
-**Scripts**
+Config lives in [`apphosting.yaml`](./apphosting.yaml). App Hosting is
+git-driven: once a backend is connected to the GitHub repo, every push to the
+tracked branch triggers a build + rollout. Requires the **Blaze** (pay-as-you-go)
+billing plan.
+
+**One-time setup** (needs the Firebase project ID — not yet configured):
 ```bash
-npm run cf:build     # build the Worker bundle (.open-next/)
-npm run cf:preview   # build + run locally in the Cloudflare runtime (workerd)
-npm run cf:deploy    # build + deploy (requires `wrangler login`)
+npm install -g firebase-tools     # if not installed
+firebase login
+firebase use --add                # select the customer's Firebase project
+firebase init apphosting          # connect this GitHub repo + branch, region
+```
+Or do it in the Firebase console: **Build → App Hosting → Get started**, connect
+the `codersworld2026/FAB-Project` repo and branch.
+
+**Deploys:** push to the connected branch (auto rollout), or trigger manually:
+```bash
+firebase apphosting:rollouts:create BACKEND_ID
 ```
 
-**Option A — Connect the GitHub repo (recommended, auto-deploys)**
-1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository**;
-   connect GitHub and select the repo.
-2. Set **Build command:** `npx opennextjs-cloudflare build` and
-   **Deploy command:** `npx wrangler deploy`.
-3. Add environment variables/secrets under **Workers → Settings → Variables**
-   (see `.env.example`). None are required for the keyless preview build.
-4. Add the custom domain under the Worker’s **Domains & Routes**.
+**Environment variables / secrets:** set in `apphosting.yaml` (public values) and
+Cloud Secret Manager (sensitive keys) — see the commented examples in that file.
+None are required for the initial keyless **preview-mode** deploy, so you can ship
+the demo first and add Supabase/Anthropic/Stripe keys later.
 
-**Option B — Deploy from your machine**
-```bash
-npx wrangler login
-npm run cf:deploy
-```
-
-> **Note:** the OpenNext Cloudflare adapter does not yet support Next.js 16
-> Node-runtime middleware (`proxy`), so `src/proxy.ts` was removed. Protected
-> routes are still enforced at the page/layout level
-> (`requireProfile`/`requireOwner`). The session-refresh helper in
-> `src/lib/supabase/proxy.ts` documents how to restore middleware later (or when
-> hosting on Vercel, which supports it natively).
+**Custom domain:** Firebase console → App Hosting → your backend → **Add custom
+domain**.
 
 ## Cost note
 
