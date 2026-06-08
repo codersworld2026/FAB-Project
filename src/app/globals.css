@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Manual (class-based) dark mode: `dark:` utilities apply under `.dark`.
+ * The default mode is "system" (auto day/night) via the inline ThemeScript. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ------------------------------------------------------------------ *
  * Lessons Generator — premium science/education design system.
  *
@@ -85,6 +89,13 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* Dark theme base — deep zinc canvas with soft light text. */
+  html.dark body {
+    background-color: #09090b; /* zinc-950 */
+    color: #e4e4e7; /* zinc-200 */
   }
 
   /* Consistent, visible keyboard focus across the app. */
@@ -93,10 +104,17 @@
     outline-offset: 2px;
     border-radius: 6px;
   }
+  html.dark :focus-visible {
+    outline-color: #a78bfa; /* violet-400 */
+  }
 
   ::selection {
     background-color: #ddd6fe; /* violet-200 */
     color: #4c1d95; /* violet-900 */
+  }
+  html.dark ::selection {
+    background-color: #5b21b6; /* violet-800 */
+    color: #ede9fe; /* violet-100 */
   }
 
   /* Balanced headings; tighter tracking for a polished feel. */
@@ -143,6 +161,9 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }
+  html.dark .glass {
+    background-color: color-mix(in srgb, #18181b 68%, transparent);
+  }
 
   /* Subtle dotted "lab grid" backdrop for section washes. */
   .bg-lab-grid {
@@ -152,5 +173,12 @@
       transparent 0
     );
     background-size: 22px 22px;
+  }
+  html.dark .bg-lab-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(167, 139, 250, 0.1) 1px,
+      transparent 0
+    );
   }
 }

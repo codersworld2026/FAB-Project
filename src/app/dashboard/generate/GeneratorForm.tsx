@@ -191,7 +191,7 @@ function WizardInner({
 
       <Stepper step={step} onJump={setStep} />
 
-      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6 dark:border-zinc-800 dark:bg-zinc-900">
         {step === 0 ? <StepBasics values={values} set={set} topicError={topicError} /> : null}
         {step === 1 ? <StepClassProfile values={values} set={set} /> : null}
         {step === 2 ? <StepOutputs /> : null}
@@ -199,12 +199,12 @@ function WizardInner({
       </div>
 
       {/* Nav — sticky on mobile for easy thumb reach */}
-      <div className="sticky bottom-0 z-10 -mx-4 flex items-center gap-3 border-t border-zinc-200 bg-white/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none">
+      <div className="sticky bottom-0 z-10 -mx-4 flex items-center gap-3 border-t border-zinc-200 bg-white/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none dark:border-zinc-800 dark:bg-zinc-950/95 sm:dark:bg-transparent">
         {step > 0 ? (
           <button
             type="button"
             onClick={back}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-zinc-300 bg-white px-5 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-50"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-zinc-300 bg-white px-5 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
           >
             Back
           </button>
@@ -239,12 +239,12 @@ function Stepper({ step, onJump }: { step: number; onJump: (n: number) => void }
       {/* Mobile: compact label + progress bar */}
       <div className="sm:hidden">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-violet-700">
+          <p className="text-sm font-semibold text-violet-700 dark:text-violet-300">
             Step {step + 1} of {STEPS.length}
           </p>
-          <p className="text-sm font-medium text-zinc-500">{STEPS[step]}</p>
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{STEPS[step]}</p>
         </div>
-        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-zinc-100">
+        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
           <div
             className="h-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 transition-all duration-300"
             style={{ width: `${pct}%` }}
@@ -275,8 +275,8 @@ function Stepper({ step, onJump }: { step: number; onJump: (n: number) => void }
                     active
                       ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white shadow'
                       : done
-                        ? 'bg-violet-100 text-violet-700'
-                        : 'bg-zinc-100 text-zinc-400',
+                        ? 'bg-violet-100 text-violet-700 dark:bg-violet-950/60 dark:text-violet-300'
+                        : 'bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500',
                   )}
                 >
                   {done ? '✓' : i + 1}
@@ -284,7 +284,11 @@ function Stepper({ step, onJump }: { step: number; onJump: (n: number) => void }
                 <span
                   className={clsx(
                     'text-sm font-semibold',
-                    active ? 'text-zinc-900' : done ? 'text-zinc-600' : 'text-zinc-400',
+                    active
+                      ? 'text-zinc-900 dark:text-zinc-50'
+                      : done
+                        ? 'text-zinc-600 dark:text-zinc-300'
+                        : 'text-zinc-400 dark:text-zinc-500',
                   )}
                 >
                   {label}
@@ -294,7 +298,7 @@ function Stepper({ step, onJump }: { step: number; onJump: (n: number) => void }
                 <span
                   className={clsx(
                     'h-0.5 flex-1 rounded',
-                    done ? 'bg-violet-300' : 'bg-zinc-200',
+                    done ? 'bg-violet-300 dark:bg-violet-800' : 'bg-zinc-200 dark:bg-zinc-800',
                   )}
                 />
               ) : null}
@@ -438,7 +442,7 @@ function StepOutputs() {
   return (
     <div className="space-y-5">
       <StepHeading icon={<MoleculeIcon className="h-5 w-5" />} title="Outputs" subtitle="Everything below is included." />
-      <p className="text-sm text-zinc-600">
+      <p className="text-sm text-zinc-600 dark:text-zinc-300">
         Each pack is generated as a complete, classroom-ready set of resources.
         Individual exports (PDF &amp; PowerPoint) arrive in a later release.
       </p>
@@ -446,7 +450,7 @@ function StepOutputs() {
         {INCLUDED.map((item) => (
           <li
             key={item}
-            className="flex items-center gap-3 rounded-xl border border-violet-100 bg-violet-50/50 px-3 py-2.5 text-sm font-medium text-zinc-800"
+            className="flex items-center gap-3 rounded-xl border border-violet-100 bg-violet-50/50 px-3 py-2.5 text-sm font-medium text-zinc-800 dark:border-violet-950 dark:bg-violet-950/30 dark:text-zinc-100"
           >
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white">
               <svg width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -482,31 +486,31 @@ function StepReview({ values }: { values: Values }) {
     <div className="space-y-5">
       <StepHeading icon={<AtomIcon className="h-5 w-5" />} title="Review & generate" subtitle="Check the details, then create your pack." />
 
-      <dl className="overflow-hidden rounded-xl border border-zinc-200">
+      <dl className="overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
         {rows.map(([label, value], i) => (
           <div
             key={label}
             className={clsx(
               'flex items-center justify-between gap-4 px-4 py-3 text-sm',
-              i % 2 === 0 ? 'bg-zinc-50/60' : 'bg-white',
+              i % 2 === 0 ? 'bg-zinc-50/60 dark:bg-zinc-800/40' : 'bg-white dark:bg-zinc-900',
             )}
           >
-            <dt className="font-medium text-zinc-500">{label}</dt>
-            <dd className="text-right font-semibold text-zinc-900">{value}</dd>
+            <dt className="font-medium text-zinc-500 dark:text-zinc-400">{label}</dt>
+            <dd className="text-right font-semibold text-zinc-900 dark:text-zinc-100">{value}</dd>
           </div>
         ))}
       </dl>
 
       {tailored.length > 0 ? (
         <div>
-          <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+          <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
             Tailored for
           </p>
           <div className="flex flex-wrap gap-1.5">
             {tailored.map((t) => (
               <span
                 key={t}
-                className="rounded-full bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700 ring-1 ring-inset ring-violet-100"
+                className="rounded-full bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700 ring-1 ring-inset ring-violet-100 dark:bg-violet-950/50 dark:text-violet-300 dark:ring-violet-900"
               >
                 {t}
               </span>
@@ -515,7 +519,7 @@ function StepReview({ values }: { values: Values }) {
         </div>
       ) : null}
 
-      <p className="rounded-xl bg-cyan-50/70 px-4 py-3 text-xs text-cyan-900 ring-1 ring-inset ring-cyan-100">
+      <p className="rounded-xl bg-cyan-50/70 px-4 py-3 text-xs text-cyan-900 ring-1 ring-inset ring-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:ring-cyan-900">
         Generation can take a moment. Keep this tab open — you&apos;ll be taken
         straight to your finished pack.
       </p>
@@ -535,12 +539,12 @@ function StepHeading({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
+      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300">
         {icon}
       </span>
       <div>
-        <h2 className="text-lg font-bold text-zinc-900">{title}</h2>
-        <p className="text-sm text-zinc-500">{subtitle}</p>
+        <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{title}</h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">{subtitle}</p>
       </div>
     </div>
   );
@@ -556,7 +560,7 @@ function GeneratingState() {
     'Adding teacher notes',
   ];
   return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border border-violet-100 bg-gradient-to-b from-violet-50/70 to-white px-6 py-16 text-center shadow-sm">
+    <div className="flex flex-col items-center justify-center rounded-3xl border border-violet-100 bg-gradient-to-b from-violet-50/70 to-white px-6 py-16 text-center shadow-sm dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-950">
       {/* Spinning atom */}
       <div className="relative flex h-24 w-24 items-center justify-center">
         <div className="absolute inset-0 rounded-full bg-violet-200/40 blur-xl motion-safe:animate-pulse-soft" />
@@ -564,19 +568,19 @@ function GeneratingState() {
         <SparkleIcon className="absolute -right-1 -top-1 h-6 w-6 text-fuchsia-500 motion-safe:animate-pulse-soft" />
       </div>
 
-      <h2 className="mt-6 text-xl font-bold text-zinc-900">
+      <h2 className="mt-6 text-xl font-bold text-zinc-900 dark:text-zinc-50">
         Building your classroom-ready pack…
       </h2>
-      <p className="mt-1 text-sm text-zinc-500">This usually takes a few moments.</p>
+      <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">This usually takes a few moments.</p>
 
       <ul className="mt-6 w-full max-w-xs space-y-2 text-left">
         {phases.map((p, i) => (
           <li
             key={p}
-            className="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-zinc-700 shadow-sm ring-1 ring-zinc-100 motion-safe:animate-fade-up"
+            className="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-zinc-700 shadow-sm ring-1 ring-zinc-100 motion-safe:animate-fade-up dark:bg-zinc-900 dark:text-zinc-200 dark:ring-zinc-800"
             style={{ animationDelay: `${i * 140}ms` }}
           >
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-100 text-violet-600 dark:bg-violet-950/60">
               <span className="h-2 w-2 rounded-full bg-violet-500 motion-safe:animate-pulse-soft" />
             </span>
             {p}

@@ -9,14 +9,14 @@ export function LessonGeneratorPreview() {
   const outputs = ['Lesson plan', 'Slides', 'Worksheets', 'Quiz', 'Teacher notes'];
 
   return (
-    <div className="w-full max-w-sm rounded-3xl border border-white/70 bg-white/90 p-5 shadow-2xl shadow-violet-400/25 ring-1 ring-white backdrop-blur">
+    <div className="w-full max-w-sm rounded-3xl border border-white/70 bg-white/90 p-5 shadow-2xl shadow-violet-400/25 ring-1 ring-white backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/90 dark:shadow-black/40 dark:ring-zinc-800">
       {/* Window chrome */}
-      <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
+      <div className="flex items-center justify-between border-b border-zinc-100 pb-3 dark:border-zinc-800">
         <div className="flex items-center gap-2">
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white">
             <SparkleIcon className="h-4 w-4" />
           </span>
-          <p className="text-sm font-bold text-zinc-900">New lesson pack</p>
+          <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">New lesson pack</p>
         </div>
         <span className="flex gap-1" aria-hidden="true">
           <span className="h-2 w-2 rounded-full bg-rose-300" />
@@ -36,7 +36,7 @@ export function LessonGeneratorPreview() {
         {['Mixed ability', 'EAL support'].map((chip) => (
           <span
             key={chip}
-            className="rounded-lg bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700 ring-1 ring-inset ring-violet-100"
+            className="rounded-lg bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700 ring-1 ring-inset ring-violet-100 dark:bg-violet-950/50 dark:text-violet-300 dark:ring-violet-900"
           >
             {chip}
           </span>
@@ -48,7 +48,7 @@ export function LessonGeneratorPreview() {
       </p>
       <div className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-2">
         {outputs.map((o) => (
-          <span key={o} className="flex items-center gap-2 text-sm text-zinc-700">
+          <span key={o} className="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-200">
             <CheckBox />
             {o}
           </span>
@@ -69,7 +69,7 @@ function PreviewRow({ label, value }: { label: string; value: string }) {
       <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
         {label}
       </p>
-      <div className="mt-1.5 flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/80 px-3 py-2.5 text-sm font-medium text-zinc-800">
+      <div className="mt-1.5 flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/80 px-3 py-2.5 text-sm font-medium text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800/80 dark:text-zinc-100">
         {value}
         <span className="h-1.5 w-1.5 rounded-full bg-violet-400" aria-hidden="true" />
       </div>

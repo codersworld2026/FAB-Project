@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { APP_CONFIG } from '@/lib/config';
 import { clsx } from '@/components/clsx';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const NAV = [
   { label: "What's included", href: '#pack' },
@@ -16,11 +17,11 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-violet-100/70 bg-white/80 shadow-sm shadow-violet-100/40 backdrop-blur-md">
+    <header className="sticky top-0 z-30 border-b border-violet-100/70 bg-white/80 shadow-sm shadow-violet-100/40 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80 dark:shadow-none">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
           <LogoMark />
-          <span className="text-base font-bold tracking-tight text-zinc-900 sm:text-lg">
+          <span className="text-base font-bold tracking-tight text-zinc-900 sm:text-lg dark:text-zinc-50">
             {APP_CONFIG.name}
           </span>
         </Link>
@@ -31,20 +32,21 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
             <a
               key={item.label}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-violet-700"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-violet-700 dark:text-zinc-300 dark:hover:text-violet-300"
             >
               {item.label}
             </a>
           ))}
           <Link
             href="/login"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-violet-700"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-violet-700 dark:text-zinc-300 dark:hover:text-violet-300"
           >
             Login
           </Link>
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle className="hidden sm:inline-flex" />
           <Link
             href={loggedIn ? '/dashboard' : '/signup'}
             className="hidden rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/35 sm:inline-flex"
@@ -56,7 +58,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-zinc-700 transition-colors hover:bg-violet-50 active:bg-violet-100 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-zinc-700 transition-colors hover:bg-violet-50 active:bg-violet-100 md:hidden dark:text-zinc-200 dark:hover:bg-zinc-800"
           >
             <BurgerIcon open={open} />
           </button>
@@ -66,8 +68,8 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
       {/* Mobile slide-down menu (animated open + close) */}
       <div
         className={clsx(
-          'overflow-hidden border-violet-100 bg-white/95 backdrop-blur transition-[max-height,opacity] duration-300 ease-out md:hidden',
-          open ? 'max-h-[26rem] border-t opacity-100' : 'max-h-0 opacity-0',
+          'overflow-hidden border-violet-100 bg-white/95 backdrop-blur transition-[max-height,opacity] duration-300 ease-out md:hidden dark:border-zinc-800 dark:bg-zinc-950/95',
+          open ? 'max-h-[30rem] border-t opacity-100' : 'max-h-0 opacity-0',
         )}
         aria-hidden={!open}
       >
@@ -78,7 +80,7 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
               href={item.href}
               onClick={() => setOpen(false)}
               tabIndex={open ? 0 : -1}
-              className="flex min-h-12 items-center rounded-xl px-3 text-[15px] font-medium text-zinc-700 transition-colors hover:bg-violet-50 active:bg-violet-100"
+              className="flex min-h-12 items-center rounded-xl px-3 text-[15px] font-medium text-zinc-700 transition-colors hover:bg-violet-50 active:bg-violet-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
             >
               {item.label}
             </a>
@@ -87,10 +89,16 @@ export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {
             href="/login"
             onClick={() => setOpen(false)}
             tabIndex={open ? 0 : -1}
-            className="flex min-h-12 items-center rounded-xl px-3 text-[15px] font-medium text-zinc-700 transition-colors hover:bg-violet-50 active:bg-violet-100"
+            className="flex min-h-12 items-center rounded-xl px-3 text-[15px] font-medium text-zinc-700 transition-colors hover:bg-violet-50 active:bg-violet-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
           >
             Login
           </Link>
+
+          {/* Theme switch inside the mobile menu */}
+          <div className="mt-2 flex items-center justify-between border-t border-zinc-100 px-3 pt-3 dark:border-zinc-800">
+            <span className="text-[15px] font-medium text-zinc-700 dark:text-zinc-200">Appearance</span>
+            <ThemeToggle />
+          </div>
           <Link
             href={loggedIn ? '/dashboard' : '/signup'}
             onClick={() => setOpen(false)}

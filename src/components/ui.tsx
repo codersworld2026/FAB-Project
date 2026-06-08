@@ -19,8 +19,8 @@ export function Button({
     gradient:
       'bg-gradient-to-r from-violet-600 via-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/35 hover:brightness-[1.05] disabled:opacity-60',
     secondary:
-      'bg-white text-zinc-800 border border-zinc-300 shadow-sm hover:bg-zinc-50 hover:border-zinc-400',
-    ghost: 'bg-transparent text-zinc-700 hover:bg-zinc-100',
+      'bg-white text-zinc-800 border border-zinc-300 shadow-sm hover:bg-zinc-50 hover:border-zinc-400 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-700 dark:hover:border-zinc-600',
+    ghost: 'bg-transparent text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800',
     danger: 'bg-red-600 text-white shadow-sm hover:bg-red-700',
   };
   const sizes: Record<string, string> = {
@@ -49,7 +49,7 @@ export function Input({
   return (
     <input
       className={clsx(
-        'h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-400 hover:border-zinc-400 focus:border-violet-500 disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500',
+        'h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-400 hover:border-zinc-400 focus:border-violet-500 disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:hover:border-zinc-600 dark:focus:border-violet-400 dark:disabled:bg-zinc-800/50 dark:disabled:text-zinc-500',
         className,
       )}
       {...props}
@@ -65,7 +65,7 @@ export function Select({
   return (
     <select
       className={clsx(
-        'h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors hover:border-zinc-400 focus:border-violet-500',
+        'h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 shadow-sm transition-colors hover:border-zinc-400 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:border-zinc-600 dark:focus:border-violet-400',
         className,
       )}
       {...props}
@@ -82,7 +82,7 @@ export function Textarea({
   return (
     <textarea
       className={clsx(
-        'w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm leading-relaxed text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-400 hover:border-zinc-400 focus:border-violet-500',
+        'w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm leading-relaxed text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-400 hover:border-zinc-400 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:hover:border-zinc-600 dark:focus:border-violet-400',
         className,
       )}
       {...props}
@@ -96,7 +96,7 @@ export function Label({
 }: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label
-      className={clsx('mb-1.5 block text-sm font-medium text-zinc-700', className)}
+      className={clsx('mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300', className)}
       {...props}
     />
   );
@@ -118,7 +118,7 @@ export function Field({
       <Label>{label}</Label>
       {children}
       {hint && !error ? (
-        <p className="mt-1.5 text-xs text-zinc-500">{hint}</p>
+        <p className="mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">{hint}</p>
       ) : null}
       {error ? <p className="mt-1.5 text-xs text-red-600">{error}</p> : null}
     </div>
@@ -132,7 +132,7 @@ export function Card({
   return (
     <div
       className={clsx(
-        'rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6',
+        'rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6 dark:border-zinc-800 dark:bg-zinc-900',
         className,
       )}
       {...props}
@@ -148,10 +148,10 @@ export function Alert({
   children: React.ReactNode;
 }) {
   const variants: Record<string, string> = {
-    info: 'bg-blue-50 text-blue-900 border-blue-200',
-    success: 'bg-violet-50 text-violet-900 border-violet-200',
-    error: 'bg-red-50 text-red-800 border-red-200',
-    warning: 'bg-amber-50 text-amber-900 border-amber-200',
+    info: 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-950/40 dark:text-blue-200 dark:border-blue-900',
+    success: 'bg-violet-50 text-violet-900 border-violet-200 dark:bg-violet-950/40 dark:text-violet-200 dark:border-violet-900',
+    error: 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950/40 dark:text-red-200 dark:border-red-900',
+    warning: 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/40 dark:text-amber-100 dark:border-amber-900',
   };
   return (
     <div
@@ -174,10 +174,10 @@ export function Badge({
   color?: 'zinc' | 'amber' | 'violet' | 'blue';
 }) {
   const colors: Record<string, string> = {
-    zinc: 'bg-zinc-100 text-zinc-700 ring-zinc-200',
-    amber: 'bg-amber-50 text-amber-800 ring-amber-200',
-    violet: 'bg-violet-50 text-violet-800 ring-violet-200',
-    blue: 'bg-blue-50 text-blue-800 ring-blue-200',
+    zinc: 'bg-zinc-100 text-zinc-700 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700',
+    amber: 'bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-950/50 dark:text-amber-200 dark:ring-amber-900',
+    violet: 'bg-violet-50 text-violet-800 ring-violet-200 dark:bg-violet-950/50 dark:text-violet-200 dark:ring-violet-900',
+    blue: 'bg-blue-50 text-blue-800 ring-blue-200 dark:bg-blue-950/50 dark:text-blue-200 dark:ring-blue-900',
   };
   return (
     <span
@@ -213,11 +213,11 @@ export function PageHeader({
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
           {title}
         </h1>
         {description ? (
-          <p className="text-sm text-zinc-500">{description}</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
         ) : null}
       </div>
       {actions ? <div className="flex shrink-0 gap-2">{actions}</div> : null}

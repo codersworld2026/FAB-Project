@@ -15,7 +15,7 @@ export default async function AdminPage() {
       <div>
         <Link
           href="/dashboard"
-          className="text-sm font-medium text-violet-700 hover:underline"
+          className="text-sm font-medium text-violet-700 hover:underline dark:text-violet-300"
         >
           ← Back to dashboard
         </Link>
@@ -38,7 +38,7 @@ export default async function AdminPage() {
             value={`${APP_CONFIG.freeTrialPackLimit} packs`}
           />
         </dl>
-        <p className="mt-4 text-xs text-zinc-500">
+        <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-400">
           Editable settings (exam board, trial limit) are wired in Milestone 7.
         </p>
       </Card>
@@ -46,12 +46,12 @@ export default async function AdminPage() {
       {/* Prompt templates */}
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-semibold tracking-tight text-zinc-900">
+          <h2 className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
             AI prompt templates
           </h2>
           <Badge>Editing in M7</Badge>
         </div>
-        <p className="mb-4 max-w-2xl text-sm text-zinc-500">
+        <p className="mb-4 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400">
           These instructions drive every generation and are stored in the
           database, so they can be tuned without a code change. A full editor
           arrives in Milestone 7 — shown read-only here.
@@ -60,17 +60,17 @@ export default async function AdminPage() {
           {PROMPT_KEYS.map((key) => (
             <Card key={key} className="space-y-2">
               <div className="flex items-center justify-between gap-3">
-                <h3 className="text-sm font-semibold text-zinc-900">
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
                   {DEFAULT_PROMPTS[key].label}
                 </h3>
-                <code className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500">
+                <code className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
                   {key}
                 </code>
               </div>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 {DEFAULT_PROMPTS[key].description}
               </p>
-              <p className="line-clamp-2 rounded-lg bg-zinc-50 p-3 text-xs leading-relaxed text-zinc-600">
+              <p className="line-clamp-2 rounded-lg bg-zinc-50 p-3 text-xs leading-relaxed text-zinc-600 dark:bg-zinc-800/60 dark:text-zinc-300">
                 {prompts[key]}
               </p>
             </Card>
@@ -83,11 +83,11 @@ export default async function AdminPage() {
 
 function SettingStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
-      <dt className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+    <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-800/40">
+      <dt className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
         {label}
       </dt>
-      <dd className="mt-0.5 text-sm font-semibold text-zinc-900">{value}</dd>
+      <dd className="mt-0.5 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{value}</dd>
     </div>
   );
 }

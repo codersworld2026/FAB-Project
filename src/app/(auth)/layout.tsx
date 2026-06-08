@@ -18,18 +18,18 @@ export default function AuthLayout({
       <div className="relative flex flex-1 flex-col items-center justify-center px-4 py-12">
         <Link href="/" className="mb-8 flex items-center gap-2.5">
           <LogoMark />
-          <span className="text-xl font-bold tracking-tight text-zinc-900">
+          <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             {APP_CONFIG.name}
           </span>
         </Link>
         <div className="w-full max-w-md">{children}</div>
-        <p className="mt-8 text-center text-xs text-zinc-500">
+        <p className="mt-8 text-center text-xs text-zinc-500 dark:text-zinc-400">
           By continuing you agree to our{' '}
-          <Link href="/terms" className="underline hover:text-violet-700">
+          <Link href="/terms" className="underline hover:text-violet-700 dark:hover:text-violet-300">
             Terms
           </Link>{' '}
           and{' '}
-          <Link href="/privacy" className="underline hover:text-violet-700">
+          <Link href="/privacy" className="underline hover:text-violet-700 dark:hover:text-violet-300">
             Privacy Policy
           </Link>
           .

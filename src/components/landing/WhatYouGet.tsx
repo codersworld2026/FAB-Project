@@ -71,10 +71,10 @@ export function WhatYouGet() {
           <p className="text-xs font-semibold uppercase tracking-wider text-violet-600 sm:text-sm">
             One generation, a full pack
           </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
             What you get in one pack
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-zinc-600">
+          <p className="mt-3 text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
             Every pack is a complete, classroom-ready set of resources — not just a
             single worksheet. Differentiated for the whole class, out of the box.
           </p>

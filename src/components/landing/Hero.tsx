@@ -18,7 +18,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
   return (
     <section className="relative overflow-hidden">
       {/* Layered background: lavender wash + animated colour blobs + lab grid */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-violet-100 via-violet-50/60 to-white" />
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-violet-100 via-violet-50/60 to-white dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950" />
       <div className="bg-lab-grid pointer-events-none absolute inset-0 -z-20 opacity-60" />
       <div className="pointer-events-none absolute -right-24 -top-16 -z-10 h-80 w-80 rounded-full bg-fuchsia-300/40 blur-3xl motion-safe:animate-blob" />
       <div className="pointer-events-none absolute -left-24 top-40 -z-10 h-80 w-80 rounded-full bg-cyan-300/30 blur-3xl motion-safe:animate-blob [animation-delay:-6s]" />
@@ -27,12 +27,12 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-24">
         {/* Left — copy */}
         <div className="text-center lg:text-left motion-safe:animate-fade-up">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-violet-700 shadow-sm ring-1 ring-inset ring-violet-200 backdrop-blur sm:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-violet-700 shadow-sm ring-1 ring-inset ring-violet-200 backdrop-blur sm:text-xs dark:bg-zinc-800/80 dark:text-violet-300 dark:ring-violet-900">
             <SparkleIcon className="h-3.5 w-3.5" />
             Built for science teachers
           </span>
 
-          <h1 className="mt-5 text-[2.05rem] font-extrabold leading-[1.07] tracking-tight text-zinc-900 sm:text-5xl lg:text-[3.4rem]">
+          <h1 className="mt-5 text-[2.05rem] font-extrabold leading-[1.07] tracking-tight text-zinc-900 sm:text-5xl lg:text-[3.4rem] dark:text-zinc-50">
             Create complete{' '}
             <span className="text-gradient-brand motion-safe:animate-gradient">
               science lesson packs
@@ -40,7 +40,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
             in minutes
           </h1>
 
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg lg:mx-0">
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg lg:mx-0 dark:text-zinc-300">
             Generate lesson plans, slides, differentiated worksheets, assessments
             and teacher notes — tailored to your exam board and your class.
           </p>
@@ -55,7 +55,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
             </Link>
             <a
               href="#how"
-              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl border border-violet-200 bg-white/80 px-6 py-3.5 text-base font-semibold text-zinc-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 sm:w-auto"
+              className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl border border-violet-200 bg-white/80 px-6 py-3.5 text-base font-semibold text-zinc-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 sm:w-auto dark:border-zinc-700 dark:bg-zinc-800/70 dark:text-zinc-100 dark:hover:border-violet-700 dark:hover:text-violet-300"
             >
               See how it works
             </a>
@@ -63,7 +63,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
 
           <ul className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-2 lg:justify-start">
             {TRUST.map((t) => (
-              <li key={t} className="flex items-center gap-2 text-sm font-medium text-zinc-600">
+              <li key={t} className="flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
                 <CheckCircle />
                 {t}
               </li>
@@ -86,7 +86,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
             </div>
 
             {/* "Pack ready" pill */}
-            <div className="absolute -bottom-3 left-2 z-40 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-semibold text-zinc-800 shadow-lg ring-1 ring-violet-100">
+            <div className="absolute -bottom-3 left-2 z-40 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-semibold text-zinc-800 shadow-lg ring-1 ring-violet-100 dark:bg-zinc-800 dark:text-zinc-100 dark:ring-zinc-700">
               <CheckCircle /> 8 resources, one pack
             </div>
           </div>
@@ -100,12 +100,12 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
             ].map(({ Icon, label, cls }) => (
               <div
                 key={label}
-                className="flex flex-col items-center gap-1 rounded-2xl border border-violet-100 bg-white/80 py-3 shadow-sm backdrop-blur"
+                className="flex flex-col items-center gap-1 rounded-2xl border border-violet-100 bg-white/80 py-3 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/70"
               >
-                <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${cls}`}>
+                <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${cls} dark:bg-zinc-800`}>
                   <Icon className="h-5 w-5" />
                 </span>
-                <span className="text-xs font-semibold text-zinc-700">{label}</span>
+                <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">{label}</span>
               </div>
             ))}
           </div>

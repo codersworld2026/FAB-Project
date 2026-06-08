@@ -55,7 +55,7 @@ export default async function DashboardPage() {
             Your lesson packs
           </h2>
           {recentPacks.length > 0 ? (
-            <Link href="/dashboard/generate" className="text-sm font-semibold text-violet-700 hover:underline">
+            <Link href="/dashboard/generate" className="text-sm font-semibold text-violet-700 hover:underline dark:text-violet-300">
               + New pack
             </Link>
           ) : null}
@@ -73,9 +73,9 @@ export default async function DashboardPage() {
             </div>
 
             {/* Desktop: table */}
-            <div className="hidden overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm lg:block">
+            <div className="hidden overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm lg:block dark:border-zinc-800 dark:bg-zinc-900">
               <table className="w-full text-sm">
-                <thead className="border-b border-zinc-200 bg-zinc-50 text-left text-xs uppercase tracking-wide text-zinc-500">
+                <thead className="border-b border-zinc-200 bg-zinc-50 text-left text-xs uppercase tracking-wide text-zinc-500 dark:border-zinc-800 dark:bg-zinc-800/50 dark:text-zinc-400">
                   <tr>
                     <th className="px-5 py-3 font-medium">Topic</th>
                     <th className="px-5 py-3 font-medium">Level</th>
@@ -83,24 +83,24 @@ export default async function DashboardPage() {
                     <th className="px-5 py-3 font-medium">Created</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-100">
+                <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
                   {recentPacks.map((pack) => (
-                    <tr key={pack.id} className="transition-colors hover:bg-violet-50/40">
+                    <tr key={pack.id} className="transition-colors hover:bg-violet-50/40 dark:hover:bg-zinc-800/40">
                       <td className="px-5 py-3">
                         <Link
                           href={`/dashboard/packs/${pack.id}`}
-                          className="font-semibold text-violet-700 hover:underline"
+                          className="font-semibold text-violet-700 hover:underline dark:text-violet-300"
                         >
                           {pack.topic}
                         </Link>
                       </td>
-                      <td className="px-5 py-3 text-zinc-600">
+                      <td className="px-5 py-3 text-zinc-600 dark:text-zinc-300">
                         {pack.course_level} · {pack.ability_level}
                       </td>
                       <td className="px-5 py-3">
                         <ReviewBadge status={pack.review_status} />
                       </td>
-                      <td className="px-5 py-3 text-zinc-500">
+                      <td className="px-5 py-3 text-zinc-500 dark:text-zinc-400">
                         {pack.created_at
                           ? new Date(pack.created_at).toLocaleDateString('en-GB')
                           : ''}
@@ -125,19 +125,19 @@ function PackTile({
   return (
     <Link
       href={`/dashboard/packs/${pack.id}`}
-      className="group block rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md"
+      className="group block rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-violet-800"
     >
       <div className="flex items-start justify-between gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300">
           <CellIcon className="h-5 w-5" />
         </span>
         <ReviewBadge status={pack.review_status} />
       </div>
-      <p className="mt-3 font-bold text-zinc-900">{pack.topic}</p>
-      <p className="mt-0.5 text-sm text-zinc-500">
+      <p className="mt-3 font-bold text-zinc-900 dark:text-zinc-50">{pack.topic}</p>
+      <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
         {pack.course_level} · {pack.ability_level}
       </p>
-      <p className="mt-2 text-xs text-zinc-400">
+      <p className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">
         {pack.created_at ? new Date(pack.created_at).toLocaleDateString('en-GB') : ''}
       </p>
     </Link>
@@ -146,12 +146,12 @@ function PackTile({
 
 function EmptyState() {
   return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-violet-200 bg-violet-50/40 px-6 py-14 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-violet-600 shadow-sm ring-1 ring-inset ring-violet-100">
+    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-violet-200 bg-violet-50/40 px-6 py-14 text-center dark:border-zinc-700 dark:bg-zinc-900/50">
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-violet-600 shadow-sm ring-1 ring-inset ring-violet-100 dark:bg-zinc-800 dark:text-violet-300 dark:ring-zinc-700">
         <CellIcon className="h-7 w-7" />
       </div>
-      <p className="mt-4 text-base font-bold text-zinc-900">No packs yet</p>
-      <p className="mt-1 mb-5 max-w-sm text-sm text-zinc-500">
+      <p className="mt-4 text-base font-bold text-zinc-900 dark:text-zinc-50">No packs yet</p>
+      <p className="mt-1 mb-5 max-w-sm text-sm text-zinc-500 dark:text-zinc-400">
         Create your first lesson pack and it&apos;ll appear here — ready to review,
         teach and (soon) export as PDF and PowerPoint.
       </p>
@@ -172,10 +172,10 @@ function UsageCard({
 }) {
   if (usage.isSubscribed) {
     return (
-      <div className="flex items-center justify-between rounded-2xl border border-violet-100 bg-white p-5 shadow-sm">
+      <div className="flex items-center justify-between rounded-2xl border border-violet-100 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
         <div>
-          <p className="text-sm font-semibold text-zinc-900">Subscription active</p>
-          <p className="text-sm text-zinc-500">Unlimited lesson packs.</p>
+          <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Subscription active</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">Unlimited lesson packs.</p>
         </div>
         <Badge color="violet">Subscribed</Badge>
       </div>
@@ -186,11 +186,11 @@ function UsageCard({
   const exhausted = usage.remaining === 0;
 
   return (
-    <div className="rounded-2xl border border-violet-100 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-violet-100 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-zinc-900">Free trial</p>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Free trial</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
             {usage.remaining} of {usage.limit} free packs remaining.
           </p>
         </div>
@@ -205,7 +205,7 @@ function UsageCard({
           <Badge color="amber">{usage.remaining} left</Badge>
         )}
       </div>
-      <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-zinc-100">
+      <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
         <div
           className={
             exhausted

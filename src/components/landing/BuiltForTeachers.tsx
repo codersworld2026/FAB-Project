@@ -17,10 +17,10 @@ export function BuiltForTeachers() {
           <p className="text-xs font-semibold uppercase tracking-wider text-violet-600 sm:text-sm">
             Built for real teachers
           </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
             Generic resources still need an hour of adapting
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-zinc-600">
+          <p className="mt-4 text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
             Downloaded worksheets rarely fit your class. You still re-level the
             questions, add scaffolds for EAL pupils, and rewrite the parts that
             don&apos;t match your spec. Lessons Generator does that part for you —
@@ -28,7 +28,7 @@ export function BuiltForTeachers() {
           </p>
           <ul className="mt-6 space-y-3">
             {TAILORED.map((t) => (
-              <li key={t} className="flex items-start gap-3 text-sm font-medium text-zinc-700">
+              <li key={t} className="flex items-start gap-3 text-sm font-medium text-zinc-700 dark:text-zinc-200">
                 <CheckCircle />
                 {t}
               </li>
@@ -41,36 +41,36 @@ export function BuiltForTeachers() {
           <div className="pointer-events-none absolute inset-x-8 -bottom-4 -z-10 h-28 rounded-full bg-violet-300/30 blur-2xl" />
           <div className="grid gap-4 sm:grid-cols-2">
             {/* Generic */}
-            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm">
-              <span className="inline-flex rounded-full bg-zinc-200 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-zinc-500">
+            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+              <span className="inline-flex rounded-full bg-zinc-200 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
                 Generic
               </span>
-              <p className="mt-3 text-sm font-semibold text-zinc-700">One-size worksheet</p>
+              <p className="mt-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200">One-size worksheet</p>
               <div className="mt-3 space-y-2 opacity-60">
                 {[1, 2, 3, 4].map((i) => (
-                  <span key={i} className="block h-2.5 rounded bg-zinc-200" style={{ width: `${90 - i * 8}%` }} />
+                  <span key={i} className="block h-2.5 rounded bg-zinc-200 dark:bg-zinc-700" style={{ width: `${90 - i * 8}%` }} />
                 ))}
               </div>
-              <p className="mt-4 text-xs text-zinc-400">+ ~1 hour adapting</p>
+              <p className="mt-4 text-xs text-zinc-400 dark:text-zinc-500">+ ~1 hour adapting</p>
             </div>
 
             {/* Tailored */}
-            <div className="relative rounded-2xl border border-violet-200 bg-white p-5 shadow-xl shadow-violet-200/40 sm:-mt-4 sm:mb-4">
+            <div className="relative rounded-2xl border border-violet-200 bg-white p-5 shadow-xl shadow-violet-200/40 sm:-mt-4 sm:mb-4 dark:border-violet-900 dark:bg-zinc-900 dark:shadow-violet-950/40">
               <div className="flex items-center justify-between">
                 <span className="inline-flex rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
                   Tailored
                 </span>
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/60 dark:text-violet-300">
                   <MicroscopeIcon className="h-5 w-5" />
                 </span>
               </div>
-              <p className="mt-3 text-sm font-semibold text-zinc-900">3 differentiated tiers</p>
+              <p className="mt-3 text-sm font-semibold text-zinc-900 dark:text-zinc-50">3 differentiated tiers</p>
               <div className="mt-3 space-y-2">
                 <Bar label="Foundation" color="bg-emerald-400" w="78%" />
                 <Bar label="Standard" color="bg-violet-500" w="92%" />
                 <Bar label="Mastery" color="bg-rose-400" w="68%" />
               </div>
-              <p className="mt-4 text-xs font-semibold text-violet-700">Ready to teach</p>
+              <p className="mt-4 text-xs font-semibold text-violet-700 dark:text-violet-300">Ready to teach</p>
             </div>
           </div>
         </div>

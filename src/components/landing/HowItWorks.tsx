@@ -33,13 +33,13 @@ const STEPS: {
 
 export function HowItWorks({ ctaHref }: { ctaHref: string }) {
   return (
-    <section id="how" className="relative overflow-hidden bg-gradient-to-b from-white to-violet-50/60 py-16 sm:py-20">
+    <section id="how" className="relative overflow-hidden bg-gradient-to-b from-white to-violet-50/60 py-16 sm:py-20 dark:from-zinc-950 dark:to-zinc-900/50">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-wider text-violet-600 sm:text-sm">
             How it works
           </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
             From idea to classroom in three steps
           </h2>
         </div>
@@ -48,7 +48,7 @@ export function HowItWorks({ ctaHref }: { ctaHref: string }) {
         <div className="relative mt-12">
           <div
             aria-hidden="true"
-            className="absolute left-[16%] right-[16%] top-12 hidden border-t-2 border-dashed border-violet-200 lg:block"
+            className="absolute left-[16%] right-[16%] top-12 hidden border-t-2 border-dashed border-violet-200 lg:block dark:border-zinc-700"
           />
           <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {STEPS.map((step) => (

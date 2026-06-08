@@ -29,14 +29,14 @@ export default async function GeneratePage({
       <div>
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-1 text-sm font-medium text-violet-700 hover:underline"
+          className="inline-flex items-center gap-1 text-sm font-medium text-violet-700 hover:underline dark:text-violet-300"
         >
           ← Back to dashboard
         </Link>
-        <h1 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
+        <h1 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
           New lesson pack
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
           Four quick steps. We&apos;ll generate a complete, original Biology pack
           tailored to your class.
         </p>
@@ -51,8 +51,8 @@ export default async function GeneratePage({
       ) : null}
 
       {blocked ? (
-        <div className="flex flex-col items-start gap-3 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <p className="text-sm text-zinc-600">
+        <div className="flex flex-col items-start gap-3 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <p className="text-sm text-zinc-600 dark:text-zinc-300">
             Subscribe to keep generating lesson packs.
           </p>
           <Link

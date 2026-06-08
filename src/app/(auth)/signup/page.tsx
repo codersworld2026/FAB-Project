@@ -7,14 +7,14 @@ export const metadata = { title: 'Create account' };
 export default function SignupPage() {
   return (
     <Card>
-      <h1 className="text-xl font-semibold text-zinc-900">Create your account</h1>
-      <p className="mt-1 mb-6 text-sm text-zinc-500">
+      <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">Create your account</h1>
+      <p className="mt-1 mb-6 text-sm text-zinc-500 dark:text-zinc-400">
         Start your free trial. No student data is ever collected.
       </p>
       <SignupForm />
-      <p className="mt-6 text-center text-sm text-zinc-500">
+      <p className="mt-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
         Already have an account?{' '}
-        <Link href="/login" className="text-violet-700 hover:underline">
+        <Link href="/login" className="text-violet-700 hover:underline dark:text-violet-300">
           Sign in
         </Link>
       </p>
