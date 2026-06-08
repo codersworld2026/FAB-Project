@@ -95,14 +95,40 @@ See `.env.example` for the full annotated list. Summary:
   `NEXT_PUBLIC_SUPPORT_EMAIL` — app config
 - `FREE_TRIAL_PACK_LIMIT`, `NEXT_PUBLIC_DEFAULT_EXAM_BOARD` — business defaults
 
-## Deployment (Vercel)
+## Deployment (Cloudflare Workers)
 
-1. Push this repo to the customer-owned GitHub repository.
-2. Import the repo into Vercel (customer-owned account).
-3. Add every variable from `.env.example` in **Vercel → Project → Settings →
-   Environment Variables** (set `NEXT_PUBLIC_APP_URL` to the production domain).
-4. Point the customer's domain at the Vercel project.
-5. Stripe webhook + AI key setup notes are expanded in the M6/M8 handover docs.
+Deployed to Cloudflare via the [OpenNext](https://opennext.js.org/cloudflare)
+adapter (`@opennextjs/cloudflare`). Config lives in `wrangler.jsonc` and
+`open-next.config.ts`.
+
+**Scripts**
+```bash
+npm run cf:build     # build the Worker bundle (.open-next/)
+npm run cf:preview   # build + run locally in the Cloudflare runtime (workerd)
+npm run cf:deploy    # build + deploy (requires `wrangler login`)
+```
+
+**Option A — Connect the GitHub repo (recommended, auto-deploys)**
+1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository**;
+   connect GitHub and select the repo.
+2. Set **Build command:** `npx opennextjs-cloudflare build` and
+   **Deploy command:** `npx wrangler deploy`.
+3. Add environment variables/secrets under **Workers → Settings → Variables**
+   (see `.env.example`). None are required for the keyless preview build.
+4. Add the custom domain under the Worker’s **Domains & Routes**.
+
+**Option B — Deploy from your machine**
+```bash
+npx wrangler login
+npm run cf:deploy
+```
+
+> **Note:** the OpenNext Cloudflare adapter does not yet support Next.js 16
+> Node-runtime middleware (`proxy`), so `src/proxy.ts` was removed. Protected
+> routes are still enforced at the page/layout level
+> (`requireProfile`/`requireOwner`). The session-refresh helper in
+> `src/lib/supabase/proxy.ts` documents how to restore middleware later (or when
+> hosting on Vercel, which supports it natively).
 
 ## Cost note
 
