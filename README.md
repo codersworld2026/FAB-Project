@@ -49,6 +49,9 @@ hardening + deployment (M8).
 
 3. **Apply the database schema.** In the Supabase SQL editor, run, in order:
    - `supabase/migrations/0001_initial_schema.sql`
+   - `supabase/migrations/0002_activity_sheets.sql`
+   - `supabase/migrations/0003_assessments.sql`
+   - `supabase/migrations/0004_profiles_role_guard.sql` (security: blocks role self-promotion)
    - `supabase/seed.sql` (default prompts + settings)
 
    (Or use the Supabase CLI: `supabase db push`.)
@@ -81,6 +84,19 @@ update public.profiles set role = 'owner' where email = 'you@example.com';
 - `npm run start` — run the production build
 - `npm run lint` — ESLint
 - `npm run typecheck` — TypeScript check (no emit)
+- `npm run test` — Vitest unit tests
+
+## Architecture & docs
+
+See [`docs/`](docs/) for the architecture and Phase 0 foundations:
+
+- [`docs/architecture.md`](docs/architecture.md) — current + target modular-monolith, the four
+  orthogonal curriculum dimensions (subject / year / qualification stage / exam board)
+- [`docs/deployment-environments.md`](docs/deployment-environments.md) — Vercel, env-var classes,
+  when env validation runs
+- [`docs/phase-0-current-system-audit.md`](docs/phase-0-current-system-audit.md),
+  [`docs/phase-0-baseline.md`](docs/phase-0-baseline.md),
+  [`docs/phase-0-completion-report.md`](docs/phase-0-completion-report.md)
 
 ## Environment variables
 

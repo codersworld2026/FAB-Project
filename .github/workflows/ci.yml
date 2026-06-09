@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history so the migration-immutability check can diff against base.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # CI must NOT require production secrets — these steps run with none.
+      - run: npm ci
+      - run: npm run test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+
+      # Security gate: applied migrations are append-only. Fail if any already-
+      # applied migration (0001–0003) is modified or deleted on a PR.
+      - name: Migrations are append-only
+        if: github.event_name == 'pull_request'
+        run: |
+          set -euo pipefail
+          BASE="origin/${{ github.base_ref }}"
+          git fetch origin "${{ github.base_ref }}" --depth=1 || true
+          CHANGED=$(git diff --name-only --diff-filter=MD "$BASE"...HEAD -- \
+            'supabase/migrations/0001_initial_schema.sql' \
+            'supabase/migrations/0002_activity_sheets.sql' \
+            'supabase/migrations/0003_assessments.sql' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "::error::Applied migrations must never be modified or deleted:"
+            echo "$CHANGED"
+            exit 1
+          fi
+          echo "OK: existing migrations 0001–0003 are unchanged."
