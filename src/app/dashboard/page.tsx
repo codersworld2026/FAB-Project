@@ -35,7 +35,7 @@ const CREATE = [
     Icon: SeriesIcon,
   },
   {
-    href: '/dashboard/activity-sheets',
+    href: '/dashboard/activity-sheets/new',
     title: 'Activity sheets',
     subtitle: 'Print-ready classroom & homework tasks',
     accent: 'sky' as const,

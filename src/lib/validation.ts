@@ -55,3 +55,16 @@ export const generatePackSchema = z.object({
 });
 
 export type GeneratePackInput = z.infer<typeof generatePackSchema>;
+
+/** Activity-sheet generator form. */
+export const activitySheetSchema = z.object({
+  title: z.string().trim().max(160).optional().or(z.literal('')),
+  topic: z.string().trim().min(3, 'Enter a topic.').max(160, 'Topic is too long.'),
+  examBoard: z.string().trim().min(1, 'Choose a qualification.').max(80),
+  courseLevel: z.string().trim().min(1, 'Choose a year group.').max(60),
+  activityType: z.string().trim().min(1, 'Choose an activity type.').max(60),
+  difficulty: z.string().trim().min(1, 'Choose a difficulty.').max(60),
+  notes: z.string().trim().max(2000, 'Notes are too long.').optional().or(z.literal('')),
+});
+
+export type ActivitySheetInputForm = z.infer<typeof activitySheetSchema>;

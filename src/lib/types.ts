@@ -96,6 +96,43 @@ export interface PackContent {
   };
 }
 
+/* --------------------------- Activity sheets --------------------------- */
+
+export interface ActivityItem {
+  /** The student-facing task/question. */
+  prompt: string;
+  /** The teacher answer (shown only on the teacher version). */
+  answer: string;
+  marks?: number;
+}
+
+/** Structured activity-sheet content — source of truth for the print view. */
+export interface ActivitySheetContent {
+  /** Student-facing instructions. */
+  intro: string;
+  estimatedMinutes: number;
+  items: ActivityItem[];
+  teacherNotes?: string;
+}
+
+export interface ActivitySheet {
+  id: string;
+  user_id: string;
+  title: string;
+  subject: string; // Biology
+  exam_board: string; // qualification label, e.g. "Edexcel GCSE Biology"
+  course_level: string; // year group
+  topic: string;
+  activity_type: string;
+  difficulty: string;
+  content: ActivitySheetContent | null;
+  model: string | null;
+  generation_status: GenerationStatus;
+  review_status: ReviewStatus;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface PromptTemplate {
   key: string;
   label: string;

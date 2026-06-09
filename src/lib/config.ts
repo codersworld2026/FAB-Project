@@ -66,6 +66,20 @@ export const APP_CONFIG = {
   /** Class level / differentiation offered on the form. */
   classLevels: ['Support', 'Core', 'Challenge', 'Mixed ability'] as const,
 
+  /** Printable activity-sheet types a teacher can generate. */
+  activityTypes: [
+    'Labelling activity',
+    'Matching activity',
+    'Retrieval questions',
+    'Gap-fill',
+    'Keyword activity',
+    'Data interpretation',
+    'Practical method',
+    'Exam-question practice',
+    'Revision checklist',
+    'Homework sheet',
+  ] as const,
+
   lessonLengths: ['30 minutes', '45 minutes', '60 minutes', '90 minutes'] as const,
 
   /** Whether the referral-reward flow is live. Off until the backend exists. */

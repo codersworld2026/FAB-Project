@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { Badge } from '@/components/ui';
 import { clsx } from '@/components/clsx';
 import { ExportPanel } from '@/components/export/ExportPanel';
+import { Accordion } from '@/components/app/Accordion';
 import type { PackContent } from '@/lib/types';
 
 type Meta = {
@@ -12,18 +12,11 @@ type Meta = {
   createdAt: string;
 };
 
-const TABS = [
-  'Overview',
-  'Lesson Plan',
-  'Slides',
-  'Worksheets',
-  'Assessment',
-  'Teacher Notes',
-  'Export',
-] as const;
-type Tab = (typeof TABS)[number];
-
-/** Tabbed, professional view of a generated lesson pack. */
+/**
+ * Lesson workspace — an always-visible summary, the export/print actions, then
+ * collapsible sections (accordions) for the full lesson. Mobile-first: one-tap
+ * expansion, the most important detail stays in view.
+ */
 export function PackContentView({
   content,
   meta,
@@ -35,49 +28,34 @@ export function PackContentView({
   packId: string;
   title: string;
 }) {
-  const [tab, setTab] = useState<Tab>('Overview');
-
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-      {/* Tab bar — horizontally scrollable on mobile */}
-      <div
-        role="tablist"
-        aria-label="Lesson pack sections"
-        className="-mx-px flex gap-1 overflow-x-auto border-b border-zinc-100 px-3 pt-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden dark:border-zinc-800"
-      >
-        {TABS.map((t) => (
-          <button
-            key={t}
-            role="tab"
-            aria-selected={tab === t}
-            onClick={() => setTab(t)}
-            className={clsx(
-              'shrink-0 whitespace-nowrap rounded-t-lg px-3.5 py-2.5 text-sm font-semibold transition-colors',
-              tab === t
-                ? 'bg-violet-50 text-violet-700 dark:bg-violet-950/50 dark:text-violet-300'
-                : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100',
-            )}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
+    <div className="space-y-4">
+      <SummaryCard content={content} meta={meta} />
 
-      <div className="p-5 sm:p-6">
-        {tab === 'Overview' ? <OverviewTab content={content} meta={meta} /> : null}
-        {tab === 'Lesson Plan' ? <LessonPlanTab content={content} /> : null}
-        {tab === 'Slides' ? <SlidesTab content={content} /> : null}
-        {tab === 'Worksheets' ? <WorksheetsTab content={content} /> : null}
-        {tab === 'Assessment' ? <AssessmentTab content={content} /> : null}
-        {tab === 'Teacher Notes' ? <TeacherNotesTab content={content} /> : null}
-        {tab === 'Export' ? <ExportPanel packId={packId} title={title} /> : null}
-      </div>
+      {/* Actions (export / PowerPoint / print) */}
+      <ExportPanel packId={packId} title={title} />
+
+      <Accordion title="Lesson plan" badge={content.lessonPlan.sections.length} defaultOpen>
+        <LessonPlanSection content={content} />
+      </Accordion>
+      <Accordion title="Slides" badge={content.slides.length}>
+        <SlidesSection content={content} />
+      </Accordion>
+      <Accordion title="Worksheets" badge={content.worksheets.length}>
+        <WorksheetsSection content={content} />
+      </Accordion>
+      <Accordion title="Assessment & mark scheme" badge={content.assessment.questions.length}>
+        <AssessmentSection content={content} />
+      </Accordion>
+      <Accordion title="Teacher notes">
+        <TeacherNotesSection content={content} />
+      </Accordion>
     </div>
   );
 }
 
-/* ------------------------------ Overview ------------------------------ */
-function OverviewTab({ content, meta }: { content: PackContent; meta: Meta }) {
+/* ------------------------------ Summary ------------------------------ */
+function SummaryCard({ content, meta }: { content: PackContent; meta: Meta }) {
   const totalMarks = content.assessment.questions.reduce((s, q) => s + q.marks, 0);
   const stats = [
     { label: 'Slides', value: content.slides.length },
@@ -87,11 +65,10 @@ function OverviewTab({ content, meta }: { content: PackContent; meta: Meta }) {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6 dark:border-zinc-800 dark:bg-zinc-900">
       <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{content.overview.summary}</p>
 
-      {/* At a glance */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label} className="rounded-xl bg-violet-50/60 p-3 text-center ring-1 ring-inset ring-violet-100 dark:bg-violet-950/30 dark:ring-violet-900">
             <p className="text-2xl font-extrabold text-violet-700 dark:text-violet-300">{s.value}</p>
@@ -100,7 +77,7 @@ function OverviewTab({ content, meta }: { content: PackContent; meta: Meta }) {
         ))}
       </div>
 
-      <div>
+      <div className="mt-5">
         <SectionLabel>Learning objectives</SectionLabel>
         <ul className="mt-2 space-y-1.5">
           {content.overview.objectives.map((o, i) => (
@@ -112,33 +89,27 @@ function OverviewTab({ content, meta }: { content: PackContent; meta: Meta }) {
       </div>
 
       {(meta.learningObjectives || meta.teacherNotesInput) && (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {meta.learningObjectives ? (
-            <Detail label="Your objectives" value={meta.learningObjectives} />
-          ) : null}
-          {meta.teacherNotesInput ? (
-            <Detail label="Your class notes" value={meta.teacherNotesInput} />
-          ) : null}
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          {meta.learningObjectives ? <Detail label="Your objectives" value={meta.learningObjectives} /> : null}
+          {meta.teacherNotesInput ? <Detail label="Your class notes" value={meta.teacherNotesInput} /> : null}
         </div>
       )}
 
-      <p className="text-xs text-zinc-400 dark:text-zinc-500">
-        Created {new Date(meta.createdAt).toLocaleString('en-GB')}
+      <p className="mt-5 text-xs text-zinc-400 dark:text-zinc-500">
+        Created {new Date(meta.createdAt).toLocaleString('en-GB')} · AI-generated, review before teaching.
       </p>
     </div>
   );
 }
 
 /* ----------------------------- Lesson plan ----------------------------- */
-function LessonPlanTab({ content }: { content: PackContent }) {
+function LessonPlanSection({ content }: { content: PackContent }) {
   return (
     <ol className="space-y-3">
       {content.lessonPlan.sections.map((s, i) => (
         <li key={i} className="flex gap-4 rounded-xl border border-zinc-100 bg-zinc-50/50 p-4 dark:border-zinc-800 dark:bg-zinc-800/40">
           <div className="flex w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-white text-center shadow-sm ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-800">
-            <span className="text-base font-extrabold text-violet-700 dark:text-violet-300">
-              {s.durationMins ?? '—'}
-            </span>
+            <span className="text-base font-extrabold text-violet-700 dark:text-violet-300">{s.durationMins ?? '—'}</span>
             <span className="text-[10px] font-medium uppercase text-zinc-400 dark:text-zinc-500">min</span>
           </div>
           <div className="min-w-0">
@@ -152,15 +123,13 @@ function LessonPlanTab({ content }: { content: PackContent }) {
 }
 
 /* ------------------------------- Slides ------------------------------- */
-function SlidesTab({ content }: { content: PackContent }) {
+function SlidesSection({ content }: { content: PackContent }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {content.slides.map((slide, i) => (
         <div key={i} className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
           <div className="flex items-center justify-between bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-1.5">
-            <span className="text-[11px] font-bold uppercase tracking-wide text-white/90">
-              Slide {i + 1}
-            </span>
+            <span className="text-[11px] font-bold uppercase tracking-wide text-white/90">Slide {i + 1}</span>
           </div>
           <div className="p-4">
             <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">{slide.title}</p>
@@ -182,7 +151,7 @@ function SlidesTab({ content }: { content: PackContent }) {
 }
 
 /* ----------------------------- Worksheets ----------------------------- */
-function WorksheetsTab({ content }: { content: PackContent }) {
+function WorksheetsSection({ content }: { content: PackContent }) {
   return (
     <div className="space-y-4">
       {content.worksheets.map((w, i) => (
@@ -220,7 +189,7 @@ function WorksheetsTab({ content }: { content: PackContent }) {
 }
 
 /* ----------------------------- Assessment ----------------------------- */
-function AssessmentTab({ content }: { content: PackContent }) {
+function AssessmentSection({ content }: { content: PackContent }) {
   return (
     <div className="space-y-6">
       <div>
@@ -251,7 +220,7 @@ function AssessmentTab({ content }: { content: PackContent }) {
 }
 
 /* ---------------------------- Teacher notes ---------------------------- */
-function TeacherNotesTab({ content }: { content: PackContent }) {
+function TeacherNotesSection({ content }: { content: PackContent }) {
   return (
     <div className="space-y-6">
       <NoteBlock title="Common misconceptions" accent="bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-200" items={content.teacherNotes.misconceptions} />
@@ -285,9 +254,7 @@ function NoteBlock({ title, accent, items }: { title: string; accent: string; it
 
 /* ------------------------------ helpers ------------------------------ */
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{children}</p>
-  );
+  return <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{children}</p>;
 }
 
 function Detail({ label, value }: { label: string; value: string }) {

@@ -8,7 +8,7 @@ import { buildExportLesson } from '@/lib/export/lesson';
 import { PrintableLesson } from '@/components/export/PrintableLesson';
 import { PackContentView } from './PackContentView';
 
-export const metadata = { title: 'Lesson pack' };
+export const metadata = { title: 'Lesson' };
 
 export default async function PackDetailPage({
   params,
@@ -34,10 +34,10 @@ export default async function PackDetailPage({
       {/* Header */}
       <div>
         <Link
-          href="/dashboard"
+          href="/dashboard/lessons"
           className="inline-flex items-center gap-1 text-sm font-medium text-violet-700 hover:underline dark:text-violet-300"
         >
-          ← Back to dashboard
+          ← Back to lessons
         </Link>
 
         <div className="mt-3 overflow-hidden rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50 to-white p-5 shadow-sm sm:p-6 dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-950">

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { requireProfile } from '@/lib/auth';
 import { getUsageSummary } from '@/lib/subscription';
-import { GeneratorForm } from './GeneratorForm';
+import { listPacks } from '@/lib/packs';
+import { GeneratorForm, type ExistingLesson } from './GeneratorForm';
 import { Alert } from '@/components/ui';
 import { APP_CONFIG } from '@/lib/config';
 
@@ -26,6 +27,23 @@ export default async function GeneratePage({
   const qualificationId = APP_CONFIG.qualifications.some((q) => q.id === sp.qual)
     ? sp.qual
     : undefined;
+
+  // Saved lessons offered as a starting point in the "Source" step.
+  const existingLessons: ExistingLesson[] = (await listPacks())
+    .filter((p) => Boolean(p.id && p.topic))
+    .slice(0, 12)
+    .map((p) => ({
+      id: p.id!,
+      topic: p.topic!,
+      qualificationId:
+        APP_CONFIG.qualifications.find((q) => q.label === p.exam_board)?.id ??
+        APP_CONFIG.defaultQualificationId,
+      courseLevel: APP_CONFIG.yearGroups.includes(
+        p.course_level as (typeof APP_CONFIG.yearGroups)[number],
+      )
+        ? p.course_level!
+        : APP_CONFIG.yearGroups[1],
+    }));
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -73,6 +91,7 @@ export default async function GeneratePage({
             topic: sp.topic,
             notes: sp.notes,
           }}
+          existingLessons={existingLessons}
         />
       )}
     </div>
