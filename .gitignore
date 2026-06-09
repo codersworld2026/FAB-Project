@@ -34,6 +34,14 @@ yarn-error.log*
 .env*
 !.env.example
 
+# OAuth provider client secrets — must NEVER be committed (kept only in Supabase)
+*client_secret*.json
+*.apps.googleusercontent.com.json
+
+# supabase CLI local state (project ref, pooler url, versions — never commit)
+supabase/.temp/
+supabase/.branches/
+
 # vercel
 .vercel
 
