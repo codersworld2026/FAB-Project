@@ -133,6 +133,56 @@ export interface ActivitySheet {
   updated_at: string;
 }
 
+/* ----------------------------- Assessments ---------------------------- */
+
+export type AssessmentQuestionType =
+  | 'multiple-choice'
+  | 'short-answer'
+  | 'data'
+  | 'practical'
+  | 'extended';
+
+export interface AssessmentItem {
+  number: number;
+  type: AssessmentQuestionType;
+  /** The student-facing question. */
+  prompt: string;
+  /** Choices for multiple-choice questions (labelled A, B, C… in order). */
+  options?: string[];
+  marks: number;
+  /** Mark scheme / model answer (shown only on the teacher version). */
+  markScheme: string;
+}
+
+/** Structured assessment content — source of truth for the paper + mark scheme. */
+export interface AssessmentContent {
+  /** Student-facing instructions. */
+  intro: string;
+  totalMarks: number;
+  estimatedMinutes: number;
+  items: AssessmentItem[];
+  teacherNotes?: string;
+}
+
+export interface Assessment {
+  id: string;
+  user_id: string;
+  title: string;
+  subject: string; // Biology
+  exam_board: string; // qualification label, e.g. "Edexcel GCSE Biology"
+  course_level: string; // year group
+  topic: string;
+  assessment_type: string;
+  difficulty: string;
+  question_count: number;
+  content: AssessmentContent | null;
+  model: string | null;
+  generation_status: GenerationStatus;
+  review_status: ReviewStatus;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface PromptTemplate {
   key: string;
   label: string;

@@ -42,7 +42,7 @@ const CREATE = [
     Icon: ActivityIcon,
   },
   {
-    href: '/dashboard/assessments',
+    href: '/dashboard/assessments/new',
     title: 'Assessments',
     subtitle: 'Quizzes, tests and exam-style questions',
     accent: 'amber' as const,

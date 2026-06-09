@@ -68,3 +68,21 @@ export const activitySheetSchema = z.object({
 });
 
 export type ActivitySheetInputForm = z.infer<typeof activitySheetSchema>;
+
+/** Assessment generator form. */
+export const assessmentSchema = z.object({
+  title: z.string().trim().max(160).optional().or(z.literal('')),
+  topic: z.string().trim().min(3, 'Enter a topic.').max(160, 'Topic is too long.'),
+  examBoard: z.string().trim().min(1, 'Choose a qualification.').max(80),
+  courseLevel: z.string().trim().min(1, 'Choose a year group.').max(60),
+  assessmentType: z.string().trim().min(1, 'Choose an assessment type.').max(60),
+  difficulty: z.string().trim().min(1, 'Choose a difficulty.').max(60),
+  questionCount: z.coerce
+    .number()
+    .int()
+    .min(1, 'Choose how many questions.')
+    .max(50, 'That is too many questions.'),
+  notes: z.string().trim().max(2000, 'Notes are too long.').optional().or(z.literal('')),
+});
+
+export type AssessmentInputForm = z.infer<typeof assessmentSchema>;

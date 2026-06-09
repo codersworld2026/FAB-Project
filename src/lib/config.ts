@@ -80,6 +80,18 @@ export const APP_CONFIG = {
     'Homework sheet',
   ] as const,
 
+  /** Assessment formats a teacher can generate (quizzes/tests/exam-style). */
+  assessmentTypes: [
+    'Starter quiz',
+    'Knowledge check',
+    'Exit ticket',
+    'End-of-topic test',
+    'Exam-style questions',
+  ] as const,
+
+  /** How many questions an assessment can contain. */
+  questionCounts: [5, 10, 15, 20] as const,
+
   lessonLengths: ['30 minutes', '45 minutes', '60 minutes', '90 minutes'] as const,
 
   /** Whether the referral-reward flow is live. Off until the backend exists. */

@@ -1,6 +1,6 @@
 import { isSupabaseConfigured } from './supabase/env';
 import type { UsageSummary } from './subscription';
-import type { ActivitySheet, Pack, Profile } from './types';
+import type { ActivitySheet, Assessment, Pack, Profile } from './types';
 
 /**
  * Preview mode: when Supabase isn't configured yet (no keys), the protected
@@ -128,5 +128,44 @@ export const PREVIEW_ACTIVITY_SHEETS: ActivitySheet[] = [
     review_status: 'draft',
     created_at: '2026-06-07T14:00:00.000Z',
     updated_at: '2026-06-07T14:01:00.000Z',
+  },
+];
+
+export const PREVIEW_ASSESSMENTS: Assessment[] = [
+  {
+    id: 'preview-assessment-1',
+    user_id: 'preview-user',
+    title: 'Photosynthesis — end-of-topic test',
+    subject: 'Biology',
+    exam_board: 'Edexcel GCSE Biology',
+    course_level: 'Year 10',
+    topic: 'Photosynthesis',
+    assessment_type: 'End-of-topic test',
+    difficulty: 'Core',
+    question_count: 10,
+    content: null,
+    model: 'claude-sonnet-4-6',
+    generation_status: 'complete',
+    review_status: 'approved',
+    created_at: '2026-06-06T11:00:00.000Z',
+    updated_at: '2026-06-06T11:01:00.000Z',
+  },
+  {
+    id: 'preview-assessment-2',
+    user_id: 'preview-user',
+    title: 'Cell structure — starter quiz',
+    subject: 'Biology',
+    exam_board: 'Edexcel International GCSE Biology',
+    course_level: 'Year 9',
+    topic: 'Cell structure',
+    assessment_type: 'Starter quiz',
+    difficulty: 'Support',
+    question_count: 5,
+    content: null,
+    model: 'claude-sonnet-4-6',
+    generation_status: 'complete',
+    review_status: 'draft',
+    created_at: '2026-06-08T09:30:00.000Z',
+    updated_at: '2026-06-08T09:31:00.000Z',
   },
 ];
