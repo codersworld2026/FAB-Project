@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { LoginForm } from './LoginForm';
+import { OAuthButtons } from '../OAuthButtons';
 import { Card } from '@/components/ui';
 
 export const metadata = { title: 'Sign in' };
@@ -16,6 +17,7 @@ export default async function LoginPage({
       <p className="mt-1 mb-6 text-sm text-zinc-500 dark:text-zinc-400">
         Sign in to generate and manage your lesson packs.
       </p>
+      <OAuthButtons next={redirect ?? '/dashboard'} />
       <LoginForm redirectTo={redirect} initialError={error ? 'Please sign in again.' : undefined} />
       <div className="mt-6 flex items-center justify-between text-sm">
         <Link href="/forgot-password" className="text-violet-700 hover:underline dark:text-violet-300">

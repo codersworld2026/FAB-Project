@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SignupForm } from './SignupForm';
+import { OAuthButtons } from '../OAuthButtons';
 import { Card } from '@/components/ui';
 
 export const metadata = { title: 'Create account' };
@@ -11,6 +12,7 @@ export default function SignupPage() {
       <p className="mt-1 mb-6 text-sm text-zinc-500 dark:text-zinc-400">
         Start your free trial. No student data is ever collected.
       </p>
+      <OAuthButtons />
       <SignupForm />
       <p className="mt-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
         Already have an account?{' '}
