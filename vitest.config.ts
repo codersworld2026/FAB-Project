@@ -1,12 +1,14 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
-// Lib-only unit tests run in a Node environment (no DOM). The `@/*` path alias is
-// resolved manually here to avoid an extra dependency (vite-tsconfig-paths).
+// Lib unit tests run in Node; component tests opt into jsdom via a
+// `// @vitest-environment jsdom` docblock at the top of the file. The `@/*`
+// path alias is resolved manually to avoid an extra dependency.
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    setupFiles: ['./vitest.setup.ts'],
   },
   resolve: {
     alias: {
