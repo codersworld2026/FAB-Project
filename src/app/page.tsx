@@ -2,12 +2,15 @@ import { getUser } from '@/lib/auth';
 import { isPreviewMode } from '@/lib/preview';
 import { MarketingHeader } from '@/components/landing/MarketingHeader';
 import { Hero } from '@/components/landing/Hero';
-import { BuiltForTeachers } from '@/components/landing/BuiltForTeachers';
-import { WhatYouGet } from '@/components/landing/WhatYouGet';
+import { WhatTeachersCreate } from '@/components/landing/WhatTeachersCreate';
+import { QualificationSupport } from '@/components/landing/QualificationSupport';
 import { HowItWorks } from '@/components/landing/HowItWorks';
-import { ScienceDepartments } from '@/components/landing/ScienceDepartments';
+import { ExampleLesson } from '@/components/landing/ExampleLesson';
+import { CollaborationTeaser, AssistantTeaser } from '@/components/landing/PlatformTeasers';
+import { TeacherBenefits } from '@/components/landing/TeacherBenefits';
 import { CTASection } from '@/components/landing/CTASection';
 import { MarketingFooter } from '@/components/landing/MarketingFooter';
+import { SupportFab } from '@/components/landing/SupportFab';
 
 export default async function HomePage() {
   const user = await getUser();
@@ -20,13 +23,17 @@ export default async function HomePage() {
       <MarketingHeader loggedIn={loggedIn} />
       <main className="flex-1">
         <Hero ctaHref={ctaHref} />
-        <BuiltForTeachers />
-        <WhatYouGet />
+        <WhatTeachersCreate />
+        <QualificationSupport />
         <HowItWorks ctaHref={ctaHref} />
-        <ScienceDepartments />
+        <ExampleLesson />
+        <CollaborationTeaser />
+        <AssistantTeaser />
+        <TeacherBenefits />
         <CTASection ctaHref={ctaHref} />
       </main>
       <MarketingFooter />
+      <SupportFab />
     </div>
   );
 }

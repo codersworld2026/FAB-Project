@@ -16,7 +16,7 @@ export function LessonGeneratorPreview() {
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white">
             <SparkleIcon className="h-4 w-4" />
           </span>
-          <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">New lesson pack</p>
+          <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">New Biology lesson</p>
         </div>
         <span className="flex gap-1" aria-hidden="true">
           <span className="h-2 w-2 rounded-full bg-rose-300" />
@@ -26,7 +26,7 @@ export function LessonGeneratorPreview() {
       </div>
 
       <PreviewRow label="Topic" value="Cell structure" />
-      <PreviewRow label="Exam board" value="Edexcel IGCSE" />
+      <PreviewRow label="Qualification" value="Edexcel GCSE Biology" />
       <PreviewRow label="Year group" value="Year 10" />
 
       <p className="mt-4 text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
@@ -56,7 +56,7 @@ export function LessonGeneratorPreview() {
       </div>
 
       <div className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 py-3 text-sm font-semibold text-white shadow-sm">
-        Create a lesson pack
+        Create a Biology lesson
         <SparkleIcon className="h-4 w-4" />
       </div>
     </div>

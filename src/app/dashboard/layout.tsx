@@ -1,6 +1,6 @@
 import { requireProfile } from '@/lib/auth';
 import { isPreviewMode } from '@/lib/preview';
-import { DashboardNav } from '@/components/DashboardNav';
+import { AppHeader } from '@/components/app/AppHeader';
 
 export default async function DashboardLayout({
   children,
@@ -17,8 +17,12 @@ export default async function DashboardLayout({
           data activate automatically once Supabase keys are added.
         </div>
       ) : null}
-      <DashboardNav email={profile.email} isOwner={profile.role === 'owner'} />
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">{children}</main>
+      <AppHeader
+        name={profile.full_name}
+        email={profile.email}
+        isOwner={profile.role === 'owner'}
+      />
+      <main className="mx-auto max-w-6xl px-4 py-8 pb-20 sm:px-6 sm:pb-8">{children}</main>
     </div>
   );
 }

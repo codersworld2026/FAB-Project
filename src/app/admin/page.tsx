@@ -32,14 +32,16 @@ export default async function AdminPage() {
         <Eyebrow>Current settings</Eyebrow>
         <dl className="mt-3 grid gap-4 sm:grid-cols-3">
           <SettingStat label="Subject" value={APP_CONFIG.subject} />
-          <SettingStat label="Exam board" value={APP_CONFIG.defaultExamBoard} />
+          <SettingStat label="Qualifications" value="Edexcel GCSE & Int’l GCSE" />
           <SettingStat
             label="Free-trial limit"
-            value={`${APP_CONFIG.freeTrialPackLimit} packs`}
+            value={`${APP_CONFIG.freeTrialPackLimit} lessons`}
           />
         </dl>
         <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-400">
-          Editable settings (exam board, trial limit) are wired in Milestone 7.
+          Editable settings (qualifications, trial limit) are configurable via the
+          <code className="mx-1 rounded bg-zinc-100 px-1 py-0.5 dark:bg-zinc-800">app_settings</code>
+          table; a full editor arrives later.
         </p>
       </Card>
 

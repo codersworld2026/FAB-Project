@@ -17,18 +17,18 @@ export function CTASection({ ctaHref }: { ctaHref: string }) {
             <SparkleIcon className="h-3.5 w-3.5" /> Your first pack is free
           </span>
           <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
-            Plan less. Teach better.
+            Plan your next lesson in under 60 seconds
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-violet-100 sm:text-lg">
             Turn an hour of lesson prep into a couple of minutes. Generate a
-            complete, classroom-ready Biology pack today.
+            complete, classroom-ready Edexcel Biology lesson today.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3">
             <Link
               href={ctaHref}
               className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-white px-7 py-3.5 font-display text-base font-bold text-violet-700 shadow-lg transition-transform hover:scale-[1.02] sm:w-auto"
             >
-              Generate your first lesson pack
+              Create my lesson now
               <span aria-hidden="true">→</span>
             </Link>
             <span className="text-xs text-violet-100">No credit card required</span>

@@ -11,22 +11,22 @@ const STEPS: {
   {
     n: 1,
     accent: 'violet',
-    title: 'Enter lesson details',
-    description: 'Pick your topic, exam board, year group and lesson length. Biology, exam-board aligned, in seconds.',
+    title: 'Choose your lesson',
+    description: 'Pick your qualification, year group, topic and lesson length — Edexcel GCSE or International GCSE Biology.',
     icon: <PencilIcon />,
   },
   {
     n: 2,
     accent: 'cyan',
-    title: 'Add class needs',
-    description: 'Tell it about ability, SEND and EAL support, and the misconceptions you want to tackle.',
+    title: 'Pick what to generate',
+    description: 'Choose the resources you want and your class level — Support, Core, Challenge or mixed ability.',
     icon: <ClassIcon />,
   },
   {
     n: 3,
     accent: 'pink',
-    title: 'Download classroom-ready resources',
-    description: 'Get a full pack — plan, slides, differentiated worksheets, assessment and teacher notes — ready to teach.',
+    title: 'Download, edit, teach or share',
+    description: 'Get a complete lesson, tweak anything, then export to PDF and PowerPoint, print, or share with your team.',
     icon: <DownloadIcon />,
   },
 ];
@@ -70,7 +70,7 @@ export function HowItWorks({ ctaHref }: { ctaHref: string }) {
             href={ctaHref}
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 font-display text-base font-bold text-white shadow-lg shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-xl"
           >
-            Create your first pack <span aria-hidden="true">→</span>
+            Create your first lesson <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

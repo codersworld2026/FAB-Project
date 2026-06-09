@@ -7,10 +7,10 @@ import { clsx } from '@/components/clsx';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 const NAV = [
-  { label: "What's included", href: '#pack' },
+  { label: 'What you can create', href: '#create' },
   { label: 'How it works', href: '#how' },
-  { label: 'Subjects', href: '#departments' },
-  { label: 'Contact', href: `mailto:${APP_CONFIG.supportEmail}` },
+  { label: 'Example', href: '#example' },
+  { label: 'Qualifications', href: '#qualifications' },
 ];
 
 export function MarketingHeader({ loggedIn }: { loggedIn: boolean }) {

@@ -15,14 +15,15 @@ export default function TermsPage() {
 
       <h2>The service</h2>
       <p>
-        {APP_CONFIG.name} generates original, exam-style {APP_CONFIG.subject}{' '}
-        lesson resources for teachers. It does not reproduce real past papers or
-        official mark schemes.
+        {APP_CONFIG.name} generates original {APP_CONFIG.subject} lesson resources
+        for teachers, designed to support teaching of Pearson Edexcel GCSE Biology
+        and International GCSE Biology. It does not reproduce real past papers or
+        official mark schemes, and is not endorsed by or affiliated with Pearson.
       </p>
 
       <h2>Use of generated content</h2>
       <p>
-        Generated packs are AI-produced and intended for classroom use. You are
+        Generated lessons are AI-produced and intended for classroom use. You are
         responsible for reviewing content for accuracy before teaching with it.
       </p>
 

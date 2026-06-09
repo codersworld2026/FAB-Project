@@ -9,7 +9,7 @@ import {
 } from '@/components/science/ScienceIcons';
 
 const TRUST = [
-  'Exam-board aligned',
+  'Built for Edexcel GCSE & International GCSE Biology',
   'Original content — never copied',
   'Ready in minutes',
 ];
@@ -20,29 +20,29 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
       {/* Layered background: lavender wash + animated colour blobs + lab grid */}
       <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-violet-100 via-violet-50/60 to-white dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950" />
       <div className="bg-lab-grid pointer-events-none absolute inset-0 -z-20 opacity-60" />
-      <div className="pointer-events-none absolute -right-24 -top-16 -z-10 h-80 w-80 rounded-full bg-fuchsia-300/40 blur-3xl motion-safe:animate-blob" />
-      <div className="pointer-events-none absolute -left-24 top-40 -z-10 h-80 w-80 rounded-full bg-cyan-300/30 blur-3xl motion-safe:animate-blob [animation-delay:-6s]" />
-      <div className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-72 w-72 rounded-full bg-violet-300/30 blur-3xl motion-safe:animate-blob [animation-delay:-3s]" />
+      <div className="pointer-events-none absolute -right-24 -top-16 -z-10 h-80 w-80 rounded-full bg-violet-300/40 blur-3xl motion-safe:animate-blob" />
+      <div className="pointer-events-none absolute -left-24 top-40 -z-10 h-80 w-80 rounded-full bg-indigo-300/30 blur-3xl motion-safe:animate-blob [animation-delay:-6s]" />
+      <div className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-72 w-72 rounded-full bg-fuchsia-300/25 blur-3xl motion-safe:animate-blob [animation-delay:-3s]" />
 
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-24">
         {/* Left — copy */}
         <div className="text-center lg:text-left motion-safe:animate-fade-up">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-violet-700 shadow-sm ring-1 ring-inset ring-violet-200 backdrop-blur sm:text-xs dark:bg-zinc-800/80 dark:text-violet-300 dark:ring-violet-900">
             <SparkleIcon className="h-3.5 w-3.5" />
-            Built for science teachers
+            Built for Edexcel Biology teachers
           </span>
 
           <h1 className="mt-5 text-[2.05rem] font-extrabold leading-[1.07] tracking-tight text-zinc-900 sm:text-5xl lg:text-[3.4rem] dark:text-zinc-50">
-            Create complete{' '}
+            Create{' '}
             <span className="text-gradient-brand motion-safe:animate-gradient">
-              science lesson packs
+              Edexcel Biology
             </span>{' '}
-            in minutes
+            lessons in seconds
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg lg:mx-0 dark:text-zinc-300">
-            Generate lesson plans, slides, differentiated worksheets, assessments
-            and teacher notes — tailored to your exam board and your class.
+            Generate teacher-ready lessons, worksheets, activity sheets, quizzes
+            and assessments for Pearson Edexcel GCSE and International GCSE Biology.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
@@ -50,18 +50,18 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
               href={ctaHref}
               className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3.5 font-display text-base font-bold text-white shadow-lg shadow-violet-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/40 sm:w-auto"
             >
-              Create a lesson pack
+              Create a Biology lesson
               <span aria-hidden="true">→</span>
             </Link>
             <a
-              href="#how"
+              href="#example"
               className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl border border-violet-200 bg-white/80 px-6 py-3.5 font-display text-base font-bold text-zinc-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 sm:w-auto dark:border-zinc-700 dark:bg-zinc-800/70 dark:text-zinc-100 dark:hover:border-violet-700 dark:hover:text-violet-300"
             >
-              See how it works
+              View an example
             </a>
           </div>
 
-          <ul className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-2 lg:justify-start">
+          <ul className="mt-7 flex flex-col items-center gap-y-2 sm:flex-row sm:flex-wrap sm:gap-x-5 lg:justify-start">
             {TRUST.map((t) => (
               <li key={t} className="flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
                 <CheckCircle />
@@ -75,7 +75,7 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
         <div className="relative motion-safe:animate-fade-up [animation-delay:120ms]">
           {/* Floating science shapes (desktop only, decorative) */}
           <DnaIcon className="absolute -left-6 top-2 z-0 hidden h-14 w-14 text-violet-300 motion-safe:animate-float lg:block" />
-          <MoleculeIcon className="absolute -right-4 -top-6 z-30 hidden h-16 w-16 text-cyan-400/80 motion-safe:animate-float-slow lg:block" />
+          <MoleculeIcon className="absolute -right-4 -top-6 z-30 hidden h-16 w-16 text-indigo-400/80 motion-safe:animate-float-slow lg:block" />
           <AtomIcon className="absolute -left-10 bottom-10 z-0 hidden h-14 w-14 text-sky-300 motion-safe:animate-float-slow lg:block" />
           <CellIcon className="absolute -bottom-6 right-6 z-30 hidden h-16 w-16 text-fuchsia-300 motion-safe:animate-float lg:block" />
 
@@ -85,17 +85,17 @@ export function Hero({ ctaHref }: { ctaHref: string }) {
               <LessonGeneratorPreview />
             </div>
 
-            {/* "Pack ready" pill */}
+            {/* "Lesson ready" pill */}
             <div className="absolute -bottom-3 left-2 z-40 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-semibold text-zinc-800 shadow-lg ring-1 ring-violet-100 dark:bg-zinc-800 dark:text-zinc-100 dark:ring-zinc-700">
-              <CheckCircle /> 8 resources, one pack
+              <CheckCircle /> Plan, slides, worksheet &amp; quiz
             </div>
           </div>
 
           {/* Mobile supporting chips so the hero feels rich on small screens */}
           <div className="mx-auto mt-6 grid w-full max-w-sm grid-cols-3 gap-2 lg:hidden">
             {[
-              { Icon: CellIcon, label: 'Biology', cls: 'text-fuchsia-600 bg-fuchsia-50' },
-              { Icon: MoleculeIcon, label: 'Aligned', cls: 'text-cyan-600 bg-cyan-50' },
+              { Icon: CellIcon, label: 'GCSE', cls: 'text-fuchsia-600 bg-fuchsia-50' },
+              { Icon: DnaIcon, label: 'Int’l GCSE', cls: 'text-indigo-600 bg-indigo-50' },
               { Icon: AtomIcon, label: 'Minutes', cls: 'text-violet-600 bg-violet-50' },
             ].map(({ Icon, label, cls }) => (
               <div

@@ -5,7 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { generatePackAction, type GenerateState } from './actions';
 import { SubmitButton } from '@/components/SubmitButton';
 import { Alert, Field, Input, Select, Textarea } from '@/components/ui';
-import { APP_CONFIG } from '@/lib/config';
+import { APP_CONFIG, getQualification } from '@/lib/config';
 import { clsx } from '@/components/clsx';
 import {
   AtomIcon,
@@ -15,7 +15,12 @@ import {
   SparkleIcon,
 } from '@/components/science/ScienceIcons';
 
-type Defaults = { courseLevel?: string; topic?: string; notes?: string };
+type Defaults = {
+  qualificationId?: string;
+  courseLevel?: string;
+  topic?: string;
+  notes?: string;
+};
 
 const STEPS = ['Lesson basics', 'Class profile', 'Outputs', 'Generate'] as const;
 
@@ -57,13 +62,18 @@ export function GeneratorForm({ defaults }: { defaults: Defaults }) {
 
   // Real backend fields
   const [topic, setTopic] = useState<string>(defaults.topic ?? '');
-  const [examBoard, setExamBoard] = useState<string>(APP_CONFIG.defaultExamBoard);
+  const [qualificationId, setQualificationId] = useState<string>(
+    defaults.qualificationId ?? APP_CONFIG.defaultQualificationId,
+  );
   const [courseLevel, setCourseLevel] = useState<string>(
-    defaults.courseLevel ?? APP_CONFIG.courseLevels[0],
+    defaults.courseLevel ?? APP_CONFIG.yearGroups[1],
   );
   const [lessonLength, setLessonLength] = useState<string>(APP_CONFIG.lessonLengths[2]);
-  const [abilityLevel, setAbilityLevel] = useState<string>('Mixed');
+  const [abilityLevel, setAbilityLevel] = useState<string>('Core');
   const [objectives, setObjectives] = useState('');
+
+  // Qualification maps onto the existing `exam_board` column server-side.
+  const qualification = getQualification(qualificationId);
 
   // Class-profile fields → folded into teacherNotes
   const [send, setSend] = useState('');
@@ -90,7 +100,8 @@ export function GeneratorForm({ defaults }: { defaults: Defaults }) {
     <form action={formAction}>
       {/* Hidden inputs carry the canonical field names the server action reads. */}
       <input type="hidden" name="topic" value={topic} />
-      <input type="hidden" name="examBoard" value={examBoard} />
+      <input type="hidden" name="qualificationId" value={qualificationId} />
+      <input type="hidden" name="examBoard" value={qualification.label} />
       <input type="hidden" name="courseLevel" value={courseLevel} />
       <input type="hidden" name="abilityLevel" value={abilityLevel} />
       <input type="hidden" name="lessonLength" value={lessonLength} />
@@ -106,7 +117,7 @@ export function GeneratorForm({ defaults }: { defaults: Defaults }) {
         topicError={topicError}
         values={{
           topic,
-          examBoard,
+          qualificationId,
           courseLevel,
           lessonLength,
           abilityLevel,
@@ -119,7 +130,7 @@ export function GeneratorForm({ defaults }: { defaults: Defaults }) {
         }}
         set={{
           setTopic,
-          setExamBoard,
+          setQualificationId,
           setCourseLevel,
           setLessonLength,
           setAbilityLevel,
@@ -137,7 +148,7 @@ export function GeneratorForm({ defaults }: { defaults: Defaults }) {
 
 type Values = {
   topic: string;
-  examBoard: string;
+  qualificationId: string;
   courseLevel: string;
   lessonLength: string;
   abilityLevel: string;
@@ -150,7 +161,7 @@ type Values = {
 };
 type Setters = {
   setTopic: (v: string) => void;
-  setExamBoard: (v: string) => void;
+  setQualificationId: (v: string) => void;
   setCourseLevel: (v: string) => void;
   setLessonLength: (v: string) => void;
   setAbilityLevel: (v: string) => void;
@@ -334,21 +345,17 @@ function StepBasics({
         />
       </Field>
 
-      <Field label="Subject" hint="Locked to Biology for this MVP.">
-        <Input value={APP_CONFIG.subject} disabled readOnly />
-      </Field>
-
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Exam board">
-          <Select value={values.examBoard} onChange={(e) => set.setExamBoard(e.target.value)}>
-            {APP_CONFIG.examBoards.map((b) => (
-              <option key={b} value={b}>{b}</option>
+        <Field label="Qualification" hint="Edexcel Biology only.">
+          <Select value={values.qualificationId} onChange={(e) => set.setQualificationId(e.target.value)}>
+            {APP_CONFIG.qualifications.map((q) => (
+              <option key={q.id} value={q.id}>{q.label}</option>
             ))}
           </Select>
         </Field>
-        <Field label="Year group / level">
+        <Field label="Year group">
           <Select value={values.courseLevel} onChange={(e) => set.setCourseLevel(e.target.value)}>
-            {APP_CONFIG.courseLevels.map((l) => (
+            {APP_CONFIG.yearGroups.map((l) => (
               <option key={l} value={l}>{l}</option>
             ))}
           </Select>
@@ -385,9 +392,9 @@ function StepClassProfile({ values, set }: { values: Values; set: Setters }) {
     <div className="space-y-5">
       <StepHeading icon={<CellIcon className="h-5 w-5" />} title="Class profile" subtitle="Tailor it to your pupils." />
 
-      <Field label="Ability level">
+      <Field label="Class level">
         <Select value={values.abilityLevel} onChange={(e) => set.setAbilityLevel(e.target.value)}>
-          {APP_CONFIG.abilityLevels.map((a) => (
+          {APP_CONFIG.classLevels.map((a) => (
             <option key={a} value={a}>{a}</option>
           ))}
         </Select>
@@ -443,8 +450,8 @@ function StepOutputs() {
     <div className="space-y-5">
       <StepHeading icon={<MoleculeIcon className="h-5 w-5" />} title="Outputs" subtitle="Everything below is included." />
       <p className="text-sm text-zinc-600 dark:text-zinc-300">
-        Each pack is generated as a complete, classroom-ready set of resources.
-        Individual exports (PDF &amp; PowerPoint) arrive in a later release.
+        Each lesson is generated as a complete, classroom-ready set of resources.
+        Export to PDF &amp; PowerPoint from the lesson page once it&apos;s ready.
       </p>
       <ul className="grid gap-2.5 sm:grid-cols-2">
         {INCLUDED.map((item) => (
@@ -469,11 +476,10 @@ function StepOutputs() {
 function StepReview({ values }: { values: Values }) {
   const rows = [
     ['Topic', values.topic || '—'],
-    ['Subject', APP_CONFIG.subject],
-    ['Exam board', values.examBoard],
-    ['Year group / level', values.courseLevel],
+    ['Qualification', getQualification(values.qualificationId).label],
+    ['Year group', values.courseLevel],
     ['Lesson length', values.lessonLength],
-    ['Ability level', values.abilityLevel],
+    ['Class level', values.abilityLevel],
   ];
   const tailored = [
     values.send && 'SEND',

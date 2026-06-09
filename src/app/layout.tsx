@@ -21,11 +21,11 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lessons Generator — AI lessons for teachers",
+    default: "Lessons Generator — Edexcel Biology lessons for teachers",
     template: "%s · Lessons Generator",
   },
   description:
-    "Create teacher-ready lessons in seconds. Generate slides, worksheets, quizzes, lesson plans and assessments — built for real classrooms and aligned to standards.",
+    "Create Pearson Edexcel GCSE and International GCSE Biology lessons in seconds. Generate lessons, worksheets, activity sheets, quizzes and assessments — built for real classrooms.",
 };
 
 export default function RootLayout({

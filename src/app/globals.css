@@ -34,6 +34,11 @@
   --color-cyan-glow: #22d3ee; /* cyan-400 */
   --color-coral: #fb7185; /* rose-400 */
 
+  /* Calm surface tints — registered as colours so opacity modifiers work
+   * (`bg-lavender/80`). Dark-mode surfaces are set inline via `dark:` at usage. */
+  --color-lavender: #f5f3ff; /* violet-50 */
+  --color-blush: #fdf2f8; /* pink-50 */
+
   /* Named animations → usable as `animate-float`, `motion-safe:animate-blob`, … */
   --animate-float: float 7s ease-in-out infinite;
   --animate-float-slow: float 11s ease-in-out infinite;
@@ -44,6 +49,11 @@
   --animate-spin-slow: spin 26s linear infinite;
   --animate-pulse-soft: pulse-soft 4s ease-in-out infinite;
   --animate-draw: draw 2.4s ease-in-out infinite;
+
+  /* Mobile shell: drawer (right), bottom sheet (up), overlay fade. */
+  --animate-slide-in-right: slide-in-right 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-slide-up: slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-overlay-in: overlay-in 0.2s ease both;
 }
 
 @keyframes float {
@@ -78,6 +88,18 @@
   0% { stroke-dashoffset: 120; }
   50% { stroke-dashoffset: 0; }
   100% { stroke-dashoffset: -120; }
+}
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @layer base {
@@ -196,6 +218,18 @@
   }
   html.dark .glass {
     background-color: color-mix(in srgb, #18181b 68%, transparent);
+  }
+
+  /* iOS safe-area helpers (keep sticky actions clear of the home indicator). */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  /* Sticky bottom action bar: comfortable padding that clears the home bar. */
+  .sticky-action-pad {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   }
 
   /* Subtle dotted "lab grid" backdrop for section washes. */
