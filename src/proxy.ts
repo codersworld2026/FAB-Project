@@ -1,12 +1,26 @@
-import { type NextRequest } from 'next/server';
-import { updateSession } from '@/lib/supabase/proxy';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
 // Next.js 16 renamed the `middleware` convention to `proxy` (same behaviour).
-// Restored for Firebase App Hosting, which runs the full Node.js runtime and
-// supports Next middleware (the Cloudflare/OpenNext adapter did not).
-export async function proxy(request: NextRequest) {
-  return updateSession(request);
-}
+// Clerk's middleware is exported as the file's default function and runs on
+// proxy's default Node.js runtime.
+//
+// We keep the app's own /login page rather than Clerk's hosted UI, so instead
+// of `auth.protect()` we redirect unauthenticated users to /login?redirect=…
+// (matches the previous Supabase behaviour).
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/admin(.*)']);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (isProtectedRoute(request)) {
+    const { userId } = await auth();
+    if (!userId) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      url.searchParams.set('redirect', request.nextUrl.pathname);
+      return NextResponse.redirect(url);
+    }
+  }
+});
 
 export const config = {
   matcher: [

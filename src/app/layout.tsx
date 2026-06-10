@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Sora, Manrope } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { ThemeScript } from "@/components/ThemeScript";
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 // Headings — Sora: modern, geometric, confident.
 const sora = Sora({
@@ -34,15 +36,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${sora.variable} ${manrope.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <ThemeScript />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={`${sora.variable} ${manrope.variable} h-full antialiased`}
+      >
+        <body className="min-h-full flex flex-col">
+          <ThemeScript />
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

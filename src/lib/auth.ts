@@ -1,34 +1,57 @@
 import { redirect } from 'next/navigation';
-import { createClient } from './supabase/server';
-import { isSupabaseConfigured } from './supabase/env';
+import { auth } from '@clerk/nextjs/server';
+import { fetchMutation, fetchQuery } from 'convex/nextjs';
+import { api } from '../../convex/_generated/api';
+import type { Doc } from '../../convex/_generated/dataModel';
 import { PREVIEW_PROFILE, isPreviewMode } from './preview';
 import type { Profile } from './types';
 
-/** Returns the current auth user, or null. */
+/**
+ * Auth is backed by Clerk (identity) + Convex (the profile row). Before the keys
+ * are present the app should still boot, so we branch on configuration the same
+ * way the old Supabase layer did.
+ */
+function isAuthConfigured(): boolean {
+  return (
+    Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) &&
+    Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+  );
+}
+
+/** Maps a Convex profile document onto the app's Profile shape. */
+function toProfile(doc: Doc<'profiles'>): Profile {
+  return {
+    id: doc.clerk_id,
+    email: doc.email,
+    full_name: doc.full_name ?? null,
+    school: doc.school ?? null,
+    role: doc.role,
+    created_at: new Date(doc._creationTime).toISOString(),
+    updated_at: doc.updated_at,
+  };
+}
+
+/** Returns the current auth user (`{ id }`), or null. */
 export async function getUser() {
-  if (!isSupabaseConfigured()) return null;
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
+  if (!isAuthConfigured()) return null;
+  const { userId } = await auth();
+  return userId ? { id: userId } : null;
 }
 
 /** Returns the current user's profile row, or null. */
 export async function getProfile(): Promise<Profile | null> {
-  if (!isSupabaseConfigured()) return null;
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return null;
+  if (!isAuthConfigured()) return null;
+  const { userId, getToken } = await auth();
+  if (!userId) return null;
 
-  const { data } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .maybeSingle();
-  return (data as Profile) ?? null;
+  const token = await getToken({ template: 'convex' });
+  if (!token) return null;
+
+  let doc = await fetchQuery(api.profiles.getCurrent, {}, { token });
+  // First sign-in: create the profile from the Clerk identity (replaces the old
+  // Postgres signup trigger).
+  if (!doc) doc = await fetchMutation(api.profiles.ensureProfile, {}, { token });
+  return doc ? toProfile(doc) : null;
 }
 
 /** Redirects to /login if not authenticated; returns the profile otherwise. */
