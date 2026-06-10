@@ -21,7 +21,7 @@ export function ForgotPasswordForm() {
       <Field label="Email">
         <Input name="email" type="email" autoComplete="email" required />
       </Field>
-      <SubmitButton className="w-full" pendingText="Sending…">
+      <SubmitButton className="w-full" pendingText="Sending reset link…">
         Send reset link
       </SubmitButton>
     </form>

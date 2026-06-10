@@ -49,7 +49,7 @@ export function OAuthButtons({ next = '/dashboard' }: { next?: string }) {
           onClick={() => handleOAuth('google')}
         >
           <GoogleIcon />
-          {loading === 'google' ? 'Redirecting…' : OAUTH_LABELS.google}
+          {loading === 'google' ? 'Opening Google…' : OAUTH_LABELS.google}
         </Button>
 
         <Button
@@ -62,7 +62,7 @@ export function OAuthButtons({ next = '/dashboard' }: { next?: string }) {
           onClick={() => handleOAuth('azure')}
         >
           <MicrosoftIcon />
-          {loading === 'azure' ? 'Redirecting…' : OAUTH_LABELS.azure}
+          {loading === 'azure' ? 'Opening Microsoft…' : OAUTH_LABELS.azure}
         </Button>
       </div>
 

@@ -27,7 +27,7 @@ describe('OAuthButtons', () => {
     expect(screen.getByText('or continue with email')).toBeInTheDocument();
   });
 
-  it('shows loading and disables BOTH buttons during an active request', async () => {
+  it('shows "Opening Google…" and disables BOTH buttons during an active request', async () => {
     // Never resolves → component stays in the loading state.
     signInWithOAuth.mockReturnValue(new Promise(() => {}));
     render(<OAuthButtons />);
@@ -37,9 +37,31 @@ describe('OAuthButtons', () => {
 
     fireEvent.click(google);
 
-    expect(await screen.findByText('Redirecting…')).toBeInTheDocument();
+    expect(await screen.findByText('Opening Google…')).toBeInTheDocument();
     expect(google).toBeDisabled();
     expect(microsoft).toBeDisabled();
     expect(signInWithOAuth).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows "Opening Microsoft…" while Azure is starting', async () => {
+    signInWithOAuth.mockReturnValue(new Promise(() => {}));
+    render(<OAuthButtons />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Continue with Microsoft' }));
+
+    expect(await screen.findByText('Opening Microsoft…')).toBeInTheDocument();
+  });
+
+  it('surfaces a retry error and re-enables the button when the provider fails to start', async () => {
+    signInWithOAuth.mockResolvedValue({ error: { message: 'nope' } });
+    render(<OAuthButtons />);
+
+    const google = screen.getByRole('button', { name: 'Continue with Google' });
+    fireEvent.click(google);
+
+    expect(
+      await screen.findByText(/could not start sign-in/i),
+    ).toBeInTheDocument();
+    expect(google).not.toBeDisabled();
   });
 });

@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
-import { APP_CONFIG } from '@/lib/config';
+import { getRequestBaseUrl } from '@/lib/url';
 import {
   forgotPasswordSchema,
   resetPasswordSchema,
@@ -19,6 +19,49 @@ export type ActionState = {
 
 const NOT_CONFIGURED =
   'Sign-in is not available yet — the database/auth keys have not been configured. See README.';
+
+const CHECK_EMAIL =
+  'Account created. Check your email to confirm your address, then sign in.';
+
+/** True when Supabase signals the email already has an account. */
+function isAlreadyRegistered(message: string): boolean {
+  const m = message.toLowerCase();
+  return (
+    m.includes('already registered') ||
+    m.includes('already exists') ||
+    m.includes('already been registered')
+  );
+}
+
+/** Map a Supabase sign-up error to a safe, user-facing message (no internals). */
+function friendlySignUpError(message: string): string {
+  const m = message.toLowerCase();
+  if (m.includes('password')) {
+    return 'Please choose a stronger password (at least 8 characters).';
+  }
+  if (m.includes('rate') || m.includes('too many') || m.includes('limit')) {
+    return 'Too many attempts. Please wait a few minutes and try again.';
+  }
+  if (m.includes('email') && m.includes('invalid')) {
+    return 'Enter a valid email address.';
+  }
+  return 'We could not create your account. Please check your details and try again.';
+}
+
+/** Map a Supabase password-update error to a safe, user-facing message. */
+function friendlyResetError(message: string): string {
+  const m = message.toLowerCase();
+  if (m.includes('session') || m.includes('jwt') || m.includes('token')) {
+    return 'Your reset link has expired. Request a new one and try again.';
+  }
+  if (m.includes('different') || m.includes('same')) {
+    return 'Choose a password different from your current one.';
+  }
+  if (m.includes('password')) {
+    return 'Please choose a stronger password (at least 8 characters).';
+  }
+  return 'We could not update your password. Request a new reset link and try again.';
+}
 
 export async function signInAction(
   _prev: ActionState,
@@ -59,24 +102,28 @@ export async function signUpAction(
     return { error: parsed.error.issues[0]?.message ?? 'Invalid details.' };
   }
 
+  // Build the confirmation link from THIS request's origin so it works on
+  // localhost, Vercel Preview and production (not a static build-time URL).
+  const base = await getRequestBaseUrl();
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      emailRedirectTo: `${APP_CONFIG.url}/auth/callback`,
+      emailRedirectTo: `${base}/auth/callback`,
       data: {
         full_name: parsed.data.fullName,
         school: parsed.data.school ?? '',
       },
     },
   });
-  if (error) return { error: error.message };
+  if (error) {
+    // Never confirm that an address already exists — respond as for a new signup.
+    if (isAlreadyRegistered(error.message)) return { success: CHECK_EMAIL };
+    return { error: friendlySignUpError(error.message) };
+  }
 
-  return {
-    success:
-      'Account created. Check your email to confirm your address, then sign in.',
-  };
+  return { success: CHECK_EMAIL };
 }
 
 export async function signOutAction() {
@@ -98,9 +145,13 @@ export async function forgotPasswordAction(
     return { error: parsed.error.issues[0]?.message ?? 'Invalid email.' };
   }
 
+  // Recovery link routes through the hardened callback (which exchanges the
+  // code and sets the session) then on to the reset page — built from the live
+  // request origin so it is valid on localhost, Preview and production.
+  const base = await getRequestBaseUrl();
   const supabase = await createClient();
   await supabase.auth.resetPasswordForEmail(parsed.data.email, {
-    redirectTo: `${APP_CONFIG.url}/auth/callback?next=/reset-password`,
+    redirectTo: `${base}/auth/callback?next=/reset-password`,
   });
 
   // Always report success to avoid leaking which emails are registered.
@@ -118,6 +169,7 @@ export async function resetPasswordAction(
 
   const parsed = resetPasswordSchema.safeParse({
     password: formData.get('password'),
+    confirmPassword: formData.get('confirmPassword'),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? 'Invalid password.' };
@@ -127,8 +179,11 @@ export async function resetPasswordAction(
   const { error } = await supabase.auth.updateUser({
     password: parsed.data.password,
   });
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyResetError(error.message) };
 
-  revalidatePath('/', 'layout');
-  redirect('/dashboard');
+  // Confirm in place and send the user to sign in — never strand them on a
+  // blank callback page.
+  return {
+    success: 'Password updated. You can now sign in with your new password.',
+  };
 }

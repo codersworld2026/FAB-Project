@@ -53,4 +53,40 @@ describe('GET /auth/callback', () => {
     );
     expect(locationOf(res)).toBe('https://app.test/dashboard');
   });
+
+  it('handles a provider OAuth error without exchanging a code', async () => {
+    const res = await GET(
+      new Request(
+        'https://app.test/auth/callback?error=access_denied&error_description=user+denied&next=/dashboard',
+      ),
+    );
+    expect(locationOf(res)).toBe('https://app.test/login?error=auth');
+    expect(createClient).not.toHaveBeenCalled();
+  });
+
+  it('exchanges a valid recovery code and lands on the reset page', async () => {
+    const { client } = fakeClient(null);
+    vi.mocked(createClient).mockResolvedValue(client as unknown as ServerClient);
+    const res = await GET(
+      new Request('https://app.test/auth/callback?code=ok&next=/reset-password'),
+    );
+    expect(locationOf(res)).toBe('https://app.test/reset-password');
+  });
+
+  it('sends a missing recovery code to the reset page with an expired flag', async () => {
+    const res = await GET(
+      new Request('https://app.test/auth/callback?next=/reset-password'),
+    );
+    expect(locationOf(res)).toBe('https://app.test/reset-password?error=expired');
+    expect(createClient).not.toHaveBeenCalled();
+  });
+
+  it('sends a failed recovery exchange to the reset page expired view', async () => {
+    const { client } = fakeClient({ message: 'expired' });
+    vi.mocked(createClient).mockResolvedValue(client as unknown as ServerClient);
+    const res = await GET(
+      new Request('https://app.test/auth/callback?code=bad&next=/reset-password'),
+    );
+    expect(locationOf(res)).toBe('https://app.test/reset-password?error=expired');
+  });
 });

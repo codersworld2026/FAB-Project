@@ -27,7 +27,7 @@ export function SignupForm() {
       <Field label="Email">
         <Input name="email" type="email" autoComplete="email" required />
       </Field>
-      <Field label="Password">
+      <Field label="Password" hint="At least 8 characters.">
         <Input
           name="password"
           type="password"
