@@ -17,6 +17,7 @@ import {
 } from '@/app/auth/actions';
 import { createClient } from '@/lib/supabase/server';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
+import { getRequestBaseUrl } from '@/lib/url';
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -62,6 +63,24 @@ describe('signUpAction (Gate 1)', () => {
     );
     expect(result?.success).toMatch(/check your email/i);
     expect(result?.error).toBeUndefined();
+  });
+
+  it('passes the resolved Vercel Preview callback to Supabase (never localhost)', async () => {
+    const preview = 'https://fab-project-git-phase-0-au-7c964e-team.vercel.app';
+    vi.mocked(getRequestBaseUrl).mockResolvedValueOnce(preview);
+    const signUp = vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null });
+    vi.mocked(createClient).mockResolvedValue(clientWith({ signUp }));
+
+    await signUpAction(
+      null,
+      form({ fullName: 'Ada Lovelace', email: 'ada@example.com', password: 'supersecret', school: '' }),
+    );
+
+    const arg = signUp.mock.calls[0][0] as {
+      options: { emailRedirectTo: string };
+    };
+    expect(arg.options.emailRedirectTo).toBe(`${preview}/auth/callback`);
+    expect(arg.options.emailRedirectTo).not.toMatch(/localhost/);
   });
 
   it('returns the not-configured message when Supabase is missing', async () => {
