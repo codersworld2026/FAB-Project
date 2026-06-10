@@ -2,15 +2,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 
-const signInWithOAuth = vi.fn();
-vi.mock('@/lib/supabase/client', () => ({
-  createClient: () => ({ auth: { signInWithOAuth } }),
+const authenticateWithRedirect = vi.fn();
+vi.mock('@clerk/nextjs/legacy', () => ({
+  useSignIn: () => ({ isLoaded: true, signIn: { authenticateWithRedirect } }),
 }));
 
 import { OAuthButtons } from '@/app/(auth)/OAuthButtons';
 
 beforeEach(() => {
-  signInWithOAuth.mockReset();
+  authenticateWithRedirect.mockReset();
 });
 
 afterEach(cleanup);
@@ -29,7 +29,7 @@ describe('OAuthButtons', () => {
 
   it('shows "Opening Google…" and disables BOTH buttons during an active request', async () => {
     // Never resolves → component stays in the loading state.
-    signInWithOAuth.mockReturnValue(new Promise(() => {}));
+    authenticateWithRedirect.mockReturnValue(new Promise(() => {}));
     render(<OAuthButtons />);
 
     const google = screen.getByRole('button', { name: 'Continue with Google' });
@@ -40,11 +40,14 @@ describe('OAuthButtons', () => {
     expect(await screen.findByText('Opening Google…')).toBeInTheDocument();
     expect(google).toBeDisabled();
     expect(microsoft).toBeDisabled();
-    expect(signInWithOAuth).toHaveBeenCalledTimes(1);
+    expect(authenticateWithRedirect).toHaveBeenCalledTimes(1);
+    expect(authenticateWithRedirect).toHaveBeenCalledWith(
+      expect.objectContaining({ strategy: 'oauth_google' }),
+    );
   });
 
-  it('shows "Opening Microsoft…" while Azure is starting', async () => {
-    signInWithOAuth.mockReturnValue(new Promise(() => {}));
+  it('shows "Opening Microsoft…" while Microsoft is starting', async () => {
+    authenticateWithRedirect.mockReturnValue(new Promise(() => {}));
     render(<OAuthButtons />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Continue with Microsoft' }));
@@ -53,7 +56,7 @@ describe('OAuthButtons', () => {
   });
 
   it('surfaces a retry error and re-enables the button when the provider fails to start', async () => {
-    signInWithOAuth.mockResolvedValue({ error: { message: 'nope' } });
+    authenticateWithRedirect.mockRejectedValue(new Error('nope'));
     render(<OAuthButtons />);
 
     const google = screen.getByRole('button', { name: 'Continue with Google' });

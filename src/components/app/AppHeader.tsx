@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { signOutAction } from '@/app/auth/actions';
+import { useClerk } from '@clerk/nextjs';
 import { APP_CONFIG } from '@/lib/config';
 import { LogoMark } from '@/components/landing/MarketingHeader';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -28,6 +28,7 @@ export function AppHeader({
   isOwner?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const { signOut } = useClerk();
 
   return (
     <>
@@ -64,14 +65,13 @@ export function AppHeader({
               <Avatar name={name} email={email} size="sm" />
               <span className="hidden max-w-[10rem] truncate lg:inline">{name?.trim() || email}</span>
             </Link>
-            <form action={signOutAction} className="hidden md:block">
-              <button
-                type="submit"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-white/70 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-              >
-                Sign out
-              </button>
-            </form>
+            <button
+              type="button"
+              onClick={() => signOut({ redirectUrl: '/login' })}
+              className="hidden rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-white/70 hover:text-zinc-900 md:block dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+            >
+              Sign out
+            </button>
 
             {/* Mobile hamburger */}
             <button

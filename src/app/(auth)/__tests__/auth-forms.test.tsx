@@ -2,32 +2,42 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 
-// Stub the server actions so the client forms render without server-only imports.
-vi.mock('@/app/auth/actions', () => ({
-  signInAction: vi.fn(),
-  signUpAction: vi.fn(),
-  forgotPasswordAction: vi.fn(),
-  resetPasswordAction: vi.fn(),
+// Stub Clerk + the router so the client forms render without a ClerkProvider.
+vi.mock('@clerk/nextjs/legacy', () => ({
+  useSignIn: () => ({
+    isLoaded: true,
+    signIn: { create: vi.fn(), attemptFirstFactor: vi.fn() },
+    setActive: vi.fn(),
+  }),
+  useSignUp: () => ({
+    isLoaded: true,
+    signUp: {
+      create: vi.fn(),
+      prepareEmailAddressVerification: vi.fn(),
+      attemptEmailAddressVerification: vi.fn(),
+    },
+    setActive: vi.fn(),
+  }),
 }));
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
 
 afterEach(cleanup);
 
 import { LoginForm } from '@/app/(auth)/login/LoginForm';
 import { SignupForm } from '@/app/(auth)/signup/SignupForm';
-import { ResetPasswordForm } from '@/app/(auth)/reset-password/ResetPasswordForm';
+import { ForgotPasswordForm } from '@/app/(auth)/forgot-password/ForgotPasswordForm';
 
 describe('email/password forms remain available', () => {
-  it('login form still renders email + password fields and submit', () => {
+  it('login form renders email + password fields and submit', () => {
     const { container } = render(<LoginForm />);
     expect(container.querySelector('input[name="email"]')).not.toBeNull();
     expect(container.querySelector('input[name="password"]')).not.toBeNull();
-    expect(
-      screen.getByRole('button', { name: 'Sign in' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sign in' })).toBeInTheDocument();
   });
 
-  it('signup form still renders email + password fields and submit', () => {
+  it('signup form renders name, email + password fields and submit', () => {
     const { container } = render(<SignupForm />);
+    expect(container.querySelector('input[name="fullName"]')).not.toBeNull();
     expect(container.querySelector('input[name="email"]')).not.toBeNull();
     expect(container.querySelector('input[name="password"]')).not.toBeNull();
     expect(
@@ -35,12 +45,11 @@ describe('email/password forms remain available', () => {
     ).toBeInTheDocument();
   });
 
-  it('reset form renders new + confirm password fields and the update action', () => {
-    const { container } = render(<ResetPasswordForm />);
-    expect(container.querySelector('input[name="password"]')).not.toBeNull();
-    expect(container.querySelector('input[name="confirmPassword"]')).not.toBeNull();
+  it('forgot-password form starts on the email request step', () => {
+    const { container } = render(<ForgotPasswordForm />);
+    expect(container.querySelector('input[name="email"]')).not.toBeNull();
     expect(
-      screen.getByRole('button', { name: 'Update password' }),
+      screen.getByRole('button', { name: 'Send reset code' }),
     ).toBeInTheDocument();
   });
 });

@@ -1,57 +1,15 @@
-import { describe, it, expect, vi } from 'vitest';
-import {
-  buildOAuthRedirectTo,
-  safeNextPath,
-  startOAuth,
-  OAUTH_SCOPES,
-  type OAuthCapableClient,
-} from '@/lib/oauth';
+import { describe, it, expect } from 'vitest';
+import { OAUTH_LABELS, OAUTH_STRATEGY, safeNextPath } from '@/lib/oauth';
 
-function mockClient() {
-  const signInWithOAuth = vi.fn().mockResolvedValue({ error: null });
-  const client: OAuthCapableClient = { auth: { signInWithOAuth } };
-  return { client, signInWithOAuth };
-}
-
-describe('buildOAuthRedirectTo', () => {
-  it('builds the callback URL from the given origin (no hard-coded host)', () => {
-    expect(buildOAuthRedirectTo('https://app.test', '/dashboard')).toBe(
-      'https://app.test/auth/callback?next=%2Fdashboard',
-    );
+describe('OAuth provider config', () => {
+  it('maps each provider to its Clerk OAuth strategy', () => {
+    expect(OAUTH_STRATEGY.google).toBe('oauth_google');
+    expect(OAUTH_STRATEGY.microsoft).toBe('oauth_microsoft');
   });
 
-  it('defaults next to /dashboard and works for localhost', () => {
-    expect(buildOAuthRedirectTo('http://localhost:3000')).toBe(
-      'http://localhost:3000/auth/callback?next=%2Fdashboard',
-    );
-  });
-});
-
-describe('startOAuth', () => {
-  it('initiates Google with identity-only scopes', async () => {
-    const { client, signInWithOAuth } = mockClient();
-    await startOAuth(client, 'google', 'https://app.test', '/dashboard');
-    expect(signInWithOAuth).toHaveBeenCalledWith({
-      provider: 'google',
-      options: {
-        redirectTo: 'https://app.test/auth/callback?next=%2Fdashboard',
-        scopes: 'openid email profile',
-      },
-    });
-  });
-
-  it('initiates Azure (Microsoft) and explicitly requests the email scope', async () => {
-    const { client, signInWithOAuth } = mockClient();
-    await startOAuth(client, 'azure', 'https://app.test');
-    expect(signInWithOAuth).toHaveBeenCalledWith(
-      expect.objectContaining({
-        provider: 'azure',
-        options: expect.objectContaining({
-          scopes: expect.stringContaining('email'),
-        }),
-      }),
-    );
-    expect(OAUTH_SCOPES.azure).toContain('email');
+  it('has a human label per provider', () => {
+    expect(OAUTH_LABELS.google).toMatch(/google/i);
+    expect(OAUTH_LABELS.microsoft).toMatch(/microsoft/i);
   });
 });
 

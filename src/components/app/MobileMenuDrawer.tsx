@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOutAction } from '@/app/auth/actions';
+import { useClerk } from '@clerk/nextjs';
 import { APP_CONFIG } from '@/lib/config';
 import { clsx } from '@/components/clsx';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -34,6 +34,7 @@ export function MobileMenuDrawer({
   const pathname = usePathname();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const { signOut } = useClerk();
 
   useEffect(() => {
     if (!open) return;
@@ -151,15 +152,17 @@ export function MobileMenuDrawer({
             </Link>
           ) : null}
 
-          <form action={signOutAction} className="contents">
-            <button
-              type="submit"
-              className="flex min-h-12 items-center gap-3 rounded-xl px-3 font-display text-base font-bold tracking-tight text-zinc-800 transition-colors hover:bg-zinc-50 dark:text-zinc-100 dark:hover:bg-zinc-900"
-            >
-              <LogoutIcon className="h-5 w-5 shrink-0 opacity-80" />
-              Logout
-            </button>
-          </form>
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              signOut({ redirectUrl: '/login' });
+            }}
+            className="flex min-h-12 items-center gap-3 rounded-xl px-3 font-display text-base font-bold tracking-tight text-zinc-800 transition-colors hover:bg-zinc-50 dark:text-zinc-100 dark:hover:bg-zinc-900"
+          >
+            <LogoutIcon className="h-5 w-5 shrink-0 opacity-80" />
+            Logout
+          </button>
         </nav>
 
         {/* CTAs */}

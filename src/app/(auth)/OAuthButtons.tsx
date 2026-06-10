@@ -1,37 +1,45 @@
 'use client';
 
 import { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { startOAuth, OAUTH_LABELS, type OAuthProvider } from '@/lib/oauth';
+// Custom flows use Clerk's classic hooks; this version's default `useSignIn`
+// is the new "Future" API, so we import the stable surface from /legacy.
+import { useSignIn } from '@clerk/nextjs/legacy';
+import {
+  OAUTH_LABELS,
+  OAUTH_STRATEGY,
+  safeNextPath,
+  type OAuthProvider,
+} from '@/lib/oauth';
 import { Alert, Button } from '@/components/ui';
 
 /**
- * Google / Microsoft sign-in buttons for the existing Supabase Auth system.
- * Renders above the email form on both the login and sign-up pages. The
- * redirect-back URL is built from the current origin, so it works on localhost,
- * Vercel preview and production without any hard-coded host.
+ * Google / Microsoft sign-in buttons backed by Clerk. Renders above the email
+ * form on both the login and sign-up pages. Clerk handles both existing and new
+ * users via the redirect callback at /auth/callback; `next` is sanitised so the
+ * post-sign-in destination can never be an open redirect.
  */
 export function OAuthButtons({ next = '/dashboard' }: { next?: string }) {
+  const { signIn, isLoaded } = useSignIn();
   const [loading, setLoading] = useState<OAuthProvider | null>(null);
   const [error, setError] = useState<string | null>(null);
   const busy = loading !== null;
 
   async function handleOAuth(provider: OAuthProvider) {
+    if (!isLoaded || !signIn) return;
     setError(null);
     setLoading(provider);
-    const supabase = createClient();
-    const { error: oauthError } = await startOAuth(
-      supabase,
-      provider,
-      window.location.origin,
-      next,
-    );
-    if (oauthError) {
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy: OAUTH_STRATEGY[provider],
+        redirectUrl: '/auth/callback',
+        redirectUrlComplete: safeNextPath(next),
+      });
+      // On success the browser is redirected to the provider; keep the busy state.
+    } catch {
       // No fake success — surface the failure and let the user retry.
       setError('Could not start sign-in. Please try again.');
       setLoading(null);
     }
-    // On success the browser is redirected to the provider; keep the busy state.
   }
 
   return (
@@ -56,13 +64,13 @@ export function OAuthButtons({ next = '/dashboard' }: { next?: string }) {
           type="button"
           variant="secondary"
           className="w-full"
-          aria-label={OAUTH_LABELS.azure}
-          aria-busy={loading === 'azure'}
+          aria-label={OAUTH_LABELS.microsoft}
+          aria-busy={loading === 'microsoft'}
           disabled={busy}
-          onClick={() => handleOAuth('azure')}
+          onClick={() => handleOAuth('microsoft')}
         >
           <MicrosoftIcon />
-          {loading === 'azure' ? 'Opening Microsoft…' : OAUTH_LABELS.azure}
+          {loading === 'microsoft' ? 'Opening Microsoft…' : OAUTH_LABELS.microsoft}
         </Button>
       </div>
 
