@@ -1,5 +1,6 @@
 import 'server-only';
 import { createClient } from './supabase/server';
+import { isSupabaseConfigured } from './supabase/env';
 import { PREVIEW_ACTIVITY_SHEETS, isPreviewMode } from './preview';
 import { buildMockActivitySheet, type ActivitySheetInput } from './generation/activityMock';
 import type { ActivitySheet, ActivitySheetContent } from './types';
@@ -44,6 +45,12 @@ export async function createActivitySheet(
     return id;
   }
 
+  // TEMP: Supabase is gone during the Convex migration; this module is ported in
+  // a later batch. Fail clearly instead of throwing the cryptic Supabase error.
+  if (!isSupabaseConfigured()) {
+    throw new Error('Activity sheets are temporarily unavailable.');
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -76,6 +83,7 @@ export async function createActivitySheet(
 /** Lists the current user's activity sheets (newest first). */
 export async function listActivitySheets(): Promise<Partial<ActivitySheet>[]> {
   if (isPreviewMode()) return [...previewStore, ...PREVIEW_ACTIVITY_SHEETS];
+  if (!isSupabaseConfigured()) return []; // TEMP: until ported to Convex
 
   const supabase = await createClient();
   const { data } = await supabase
@@ -98,6 +106,7 @@ export async function getActivitySheet(id: string): Promise<ActivitySheet | null
     }
     return found;
   }
+  if (!isSupabaseConfigured()) return null; // TEMP: until ported to Convex
 
   const supabase = await createClient();
   const { data } = await supabase

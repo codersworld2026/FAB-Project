@@ -1,16 +1,16 @@
-import { isSupabaseConfigured } from './supabase/env';
+import { isBackendConfigured } from './backend';
 import type { UsageSummary } from './subscription';
 import type { ActivitySheet, Assessment, Pack, Profile } from './types';
 
 /**
- * Preview mode: when Supabase isn't configured yet (no keys), the protected
+ * Preview mode: when the backend isn't configured yet (no keys), the protected
  * pages render with sample data instead of redirecting to login. This lets the
- * customer see the full UI before any backend exists. As soon as real Supabase
- * keys are added, `isSupabaseConfigured()` becomes true and real auth + data
- * take over automatically.
+ * customer see the full UI before any backend exists. As soon as real Clerk +
+ * Convex keys are present, `isBackendConfigured()` becomes true and real auth +
+ * data take over automatically.
  */
 export function isPreviewMode(): boolean {
-  return !isSupabaseConfigured();
+  return !isBackendConfigured();
 }
 
 export const PREVIEW_PROFILE: Profile = {

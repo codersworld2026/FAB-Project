@@ -1,5 +1,6 @@
 import 'server-only';
 import { createClient } from './supabase/server';
+import { isSupabaseConfigured } from './supabase/env';
 import { PREVIEW_ASSESSMENTS, isPreviewMode } from './preview';
 import { buildMockAssessment, type AssessmentInput } from './generation/assessmentMock';
 import type { Assessment, AssessmentContent } from './types';
@@ -45,6 +46,12 @@ export async function createAssessment(
     return id;
   }
 
+  // TEMP: Supabase is gone during the Convex migration; this module is ported in
+  // a later batch. Fail clearly instead of throwing the cryptic Supabase error.
+  if (!isSupabaseConfigured()) {
+    throw new Error('Assessments are temporarily unavailable.');
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -78,6 +85,7 @@ export async function createAssessment(
 /** Lists the current user's assessments (newest first). */
 export async function listAssessments(): Promise<Partial<Assessment>[]> {
   if (isPreviewMode()) return [...previewStore, ...PREVIEW_ASSESSMENTS];
+  if (!isSupabaseConfigured()) return []; // TEMP: until ported to Convex
 
   const supabase = await createClient();
   const { data } = await supabase
@@ -100,6 +108,7 @@ export async function getAssessment(id: string): Promise<Assessment | null> {
     }
     return found;
   }
+  if (!isSupabaseConfigured()) return null; // TEMP: until ported to Convex
 
   const supabase = await createClient();
   const { data } = await supabase

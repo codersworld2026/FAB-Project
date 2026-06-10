@@ -3,20 +3,13 @@ import { auth } from '@clerk/nextjs/server';
 import { fetchMutation, fetchQuery } from 'convex/nextjs';
 import { api } from '../../convex/_generated/api';
 import type { Doc } from '../../convex/_generated/dataModel';
+import { isBackendConfigured } from './backend';
 import { PREVIEW_PROFILE, isPreviewMode } from './preview';
 import type { Profile } from './types';
 
-/**
- * Auth is backed by Clerk (identity) + Convex (the profile row). Before the keys
- * are present the app should still boot, so we branch on configuration the same
- * way the old Supabase layer did.
- */
-function isAuthConfigured(): boolean {
-  return (
-    Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) &&
-    Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
-  );
-}
+// Auth is backed by Clerk (identity) + Convex (the profile row). Before the keys
+// are present the app should still boot, so we branch on configuration.
+const isAuthConfigured = isBackendConfigured;
 
 /** Maps a Convex profile document onto the app's Profile shape. */
 function toProfile(doc: Doc<'profiles'>): Profile {
