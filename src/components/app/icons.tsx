@@ -37,6 +37,18 @@ export function CloseIcon({ className }: IconProps) {
   );
 }
 
+/** Concept graph — three linked nodes (used for the Concepts section). */
+export function ConceptsIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+      <path d="M7.7 7.1l8 1.6M7.6 8.4l1.5 7.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="6" cy="6" r="2.6" stroke="currentColor" strokeWidth="2" />
+      <circle cx="18" cy="9" r="2.6" stroke="currentColor" strokeWidth="2" />
+      <circle cx="9.5" cy="18" r="2.6" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+
 export function PlusIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>

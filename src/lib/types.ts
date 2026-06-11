@@ -217,3 +217,83 @@ export interface UsageLog {
   metadata: Record<string, unknown> | null;
   created_at: string;
 }
+
+/* ----------------------- Curriculum concept graph --------------------- */
+// Lightweight app-layer view models — decoupled from the Convex Doc shapes so
+// pages/components depend on a stable surface. Ids are plain strings.
+
+export type ConceptDifficulty = 'foundational' | 'developing' | 'secure' | 'stretch';
+export type ConceptAbility = 'support' | 'core' | 'challenge';
+
+export interface SubjectView {
+  id: string;
+  slug: string;
+  name: string;
+}
+
+export interface YearStageView {
+  id: string;
+  slug: string;
+  name: string;
+  phase: string;
+  orderIndex: number;
+}
+
+export interface TopicView {
+  id: string;
+  subjectId: string;
+  yearStageId: string;
+  title: string;
+  description: string;
+  orderIndex: number;
+}
+
+/** A concept as shown in lists / graph links. */
+export interface ConceptView {
+  id: string;
+  slug: string;
+  title: string;
+  shortDescription: string;
+  difficultyLevel: ConceptDifficulty;
+  orderIndex: number;
+}
+
+/** The full concept for the detail page. */
+export interface ConceptDetailView extends ConceptView {
+  subjectId: string;
+  yearStageId: string;
+  topicId: string;
+  detailedExplanation: string;
+  priorLearningSummary: string;
+  nextLearningSummary: string;
+  commonMisconceptions: string[];
+  keyVocabulary: string[];
+  lessonGuidance: string;
+  assessmentGuidance: string;
+  practicalLinks: string[];
+  abilitySuitability: ConceptAbility[];
+  scienceSkillsLinks: string[];
+}
+
+/** A tenant resource linked to a concept (as listed on the detail page). */
+export interface ConceptResourceView {
+  id: string;
+  title: string;
+  summary: string;
+  resourceType: string;
+  abilityLevel: ConceptAbility;
+  status: string;
+  created_at: string;
+}
+
+/** Everything the concept detail page renders, composed server-side. */
+export interface ConceptDetailBundle {
+  concept: ConceptDetailView;
+  subjectName: string;
+  yearStageName: string;
+  topicTitle: string;
+  prior: ConceptView[];
+  next: ConceptView[];
+  related: ConceptView[];
+  resources: ConceptResourceView[];
+}
