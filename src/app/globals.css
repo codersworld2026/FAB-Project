@@ -113,6 +113,10 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    /* Mobile guard: never allow horizontal scroll (e.g. from decorative
+       absolutely-positioned layers). `clip` doesn't create a scroll container,
+       so sticky headers keep working — unlike `overflow-x: hidden`. */
+    overflow-x: clip;
     /* Comfortable reading defaults — Manrope 15px (→16px from sm up), line 1.6. */
     font-size: 0.9375rem; /* 15px */
     line-height: 1.6;

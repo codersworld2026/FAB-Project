@@ -42,10 +42,10 @@ function ConceptLinks({ concepts }: { concepts: ConceptView[] }) {
         <li key={c.id}>
           <Link
             href={`/dashboard/concepts/${c.id}`}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50/60 px-3 py-1.5 text-sm font-semibold text-violet-800 transition-colors hover:border-violet-300 hover:bg-violet-100 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-200"
+            className="inline-flex min-h-10 max-w-full items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50/60 px-3.5 py-2 text-sm font-semibold text-violet-800 transition-colors hover:border-violet-300 hover:bg-violet-100 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-200"
           >
-            <ConceptsIcon className="h-3.5 w-3.5" />
-            {c.title}
+            <ConceptsIcon className="h-4 w-4 shrink-0" />
+            <span className="break-words">{c.title}</span>
           </Link>
         </li>
       ))}

@@ -34,7 +34,7 @@ export default function LegalLayout({
       </main>
 
       <footer className="border-t border-zinc-100 dark:border-zinc-800">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-6 text-sm text-zinc-500 sm:px-6 dark:text-zinc-400">
+        <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-6 text-sm text-zinc-500 sm:px-6 dark:text-zinc-400">
           <span>
             © {new Date().getFullYear()} {APP_CONFIG.name}
           </span>

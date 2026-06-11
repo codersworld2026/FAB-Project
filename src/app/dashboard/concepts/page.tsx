@@ -50,10 +50,11 @@ function Breadcrumbs({ trail }: { trail: { label: string; href: string }[] }) {
   );
 }
 
-/** A minimal server-rendered GET search form — no client JS. */
+/** A minimal server-rendered GET search form — no client JS. Full-width by
+ *  default; callers size it (compact in the desktop header, full-width on mobile). */
 function SearchForm({ subject, defaultValue }: { subject?: string; defaultValue?: string }) {
   return (
-    <form action="/dashboard/concepts" method="get" className="flex w-full max-w-sm items-center gap-2">
+    <form action="/dashboard/concepts" method="get" className="flex w-full items-center gap-2">
       {subject ? <input type="hidden" name="subject" value={subject} /> : null}
       <input
         type="search"
@@ -61,15 +62,33 @@ function SearchForm({ subject, defaultValue }: { subject?: string; defaultValue?
         defaultValue={defaultValue}
         placeholder="Search concepts…"
         aria-label="Search concepts"
-        className="min-h-11 flex-1 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+        className="min-h-11 w-full flex-1 rounded-xl border border-zinc-200 bg-white px-3 text-base text-zinc-900 shadow-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 sm:text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
       />
       <button
         type="submit"
-        className="inline-flex min-h-11 items-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 font-display text-sm font-bold text-white shadow-sm shadow-violet-500/25"
+        className="inline-flex min-h-11 shrink-0 items-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 font-display text-sm font-bold text-white shadow-sm shadow-violet-500/25"
       >
         Search
       </button>
     </form>
+  );
+}
+
+/** Renders the search form full-width on mobile (its own row) and compact in the
+ *  desktop header slot — avoids overflowing the SectionHeader's shrink-0 action. */
+function MobileSearchRow({ subject, defaultValue }: { subject?: string; defaultValue?: string }) {
+  return (
+    <div className="sm:hidden">
+      <SearchForm subject={subject} defaultValue={defaultValue} />
+    </div>
+  );
+}
+
+function DesktopSearchSlot({ subject, defaultValue }: { subject?: string; defaultValue?: string }) {
+  return (
+    <div className="hidden w-72 sm:block">
+      <SearchForm subject={subject} defaultValue={defaultValue} />
+    </div>
   );
 }
 
@@ -89,9 +108,10 @@ export default async function ConceptsPage({
         <SectionHeader
           title="Search concepts"
           subtitle={`Results for “${q.trim()}”`}
-          action={<SearchForm subject={subject} defaultValue={q} />}
+          action={<DesktopSearchSlot subject={subject} defaultValue={q} />}
           backHref={conceptsHref({ subject })}
         />
+        <MobileSearchRow subject={subject} defaultValue={q} />
         {results.length === 0 ? (
           <EmptyState
             icon={<ConceptsIcon className="h-8 w-8" />}
@@ -177,9 +197,10 @@ export default async function ConceptsPage({
       <SectionHeader
         title={heading.title}
         subtitle={heading.subtitle}
-        action={<SearchForm subject={activeSubject?.id} />}
+        action={<DesktopSearchSlot subject={activeSubject?.id} />}
         backHref={backHref}
       />
+      <MobileSearchRow subject={activeSubject?.id} />
       {trail.length > 1 ? <Breadcrumbs trail={trail} /> : null}
 
       {level === 'subjects' ? (
