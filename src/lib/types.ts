@@ -8,6 +8,8 @@ export interface Profile {
   full_name: string | null;
   school: string | null;
   role: UserRole;
+  /** Platform-admin flag — the only thing granting curriculum-write access. */
+  isPlatformAdmin: boolean;
   created_at: string;
   updated_at: string;
 }

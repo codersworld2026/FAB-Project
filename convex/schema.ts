@@ -33,8 +33,42 @@ export default defineSchema({
     full_name: v.optional(v.string()),
     school: v.optional(v.string()),
     role: v.union(v.literal('teacher'), v.literal('owner')),
+    // Platform-admin flag — the ONLY thing that grants curriculum-write access.
+    // Optional so the pre-existing profile row still validates; checked `=== true`.
+    is_platform_admin: v.optional(v.boolean()),
     updated_at: v.string(),
   }).index('by_clerk_id', ['clerk_id']),
+
+  // --- Multi-tenancy (camelCase; new domain) ---------------------------------
+  // Every user owns a personal organisation (type "individual"); schools/trusts
+  // come later. Created lazily by profiles.ensureProfile.
+  organizations: defineTable({
+    name: v.string(),
+    type: v.union(
+      v.literal('school'),
+      v.literal('trust'),
+      v.literal('individual'),
+    ),
+    createdAt: v.string(),
+  }),
+
+  // Links a user (Clerk subject) to an organisation with a role. `isDefault`
+  // marks the user's active org; `createdAt` orders fallback resolution.
+  memberships: defineTable({
+    userId: v.string(),
+    organizationId: v.id('organizations'),
+    role: v.union(
+      v.literal('owner'),
+      v.literal('dept_lead'),
+      v.literal('teacher'),
+    ),
+    subjectScope: v.optional(v.array(v.string())),
+    createdAt: v.string(),
+    isDefault: v.boolean(),
+  })
+    .index('by_user', ['userId'])
+    .index('by_user_default', ['userId', 'isDefault'])
+    .index('by_org', ['organizationId']),
 
   // Generated lesson resource packs. `content` (jsonb) is the source of truth.
   packs: defineTable({

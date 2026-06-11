@@ -19,6 +19,7 @@ export const PREVIEW_PROFILE: Profile = {
   full_name: 'Demo Teacher',
   school: 'Springfield International School',
   role: 'owner', // owner so the Admin page is also viewable in preview
+  isPlatformAdmin: true, // preview shows curriculum-authoring affordances too
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };

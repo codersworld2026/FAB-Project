@@ -19,6 +19,7 @@ function toProfile(doc: Doc<'profiles'>): Profile {
     full_name: doc.full_name ?? null,
     school: doc.school ?? null,
     role: doc.role,
+    isPlatformAdmin: doc.is_platform_admin === true,
     created_at: new Date(doc._creationTime).toISOString(),
     updated_at: doc.updated_at,
   };
