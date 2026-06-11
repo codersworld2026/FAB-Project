@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
-import { fetchMutation, fetchQuery } from 'convex/nextjs';
+import { fetchMutation } from 'convex/nextjs';
 import { api } from '../../convex/_generated/api';
 import type { Doc } from '../../convex/_generated/dataModel';
 import { isBackendConfigured } from './backend';
@@ -41,10 +41,14 @@ export async function getProfile(): Promise<Profile | null> {
   const token = await getToken({ template: 'convex' });
   if (!token) return null;
 
-  let doc = await fetchQuery(api.profiles.getCurrent, {}, { token });
-  // First sign-in: create the profile from the Clerk identity (replaces the old
-  // Postgres signup trigger).
-  if (!doc) doc = await fetchMutation(api.profiles.ensureProfile, {}, { token });
+  // Always run ensureProfile during auth bootstrap and use its returned profile.
+  // It's idempotent: on first sign-in it creates the profile from the Clerk
+  // identity, and on every call it backfills the personal organisation + owner
+  // membership for profiles that predate orgs. Calling it only when the profile
+  // was missing left those existing-but-membership-less users broken — org-scoped
+  // reads (e.g. /dashboard/concepts) then threw "User has no organisation
+  // membership."
+  const doc = await fetchMutation(api.profiles.ensureProfile, {}, { token });
   return doc ? toProfile(doc) : null;
 }
 

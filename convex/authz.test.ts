@@ -206,4 +206,38 @@ describe('authz + multi-tenancy', () => {
     expect(prior.map((c) => c.slug)).toContain('cells'); // prior(B) ⊇ {A}
     expect(reverseNext.map((c) => c.slug)).not.toContain('cells'); // next(B) ⊅ {A}
   });
+
+  // G — Regression: a profile created before orgs existed crashes curriculum
+  // reads with "no organisation membership" until ensureProfile backfills it.
+  // This is the /dashboard/concepts crash; auth bootstrap now always calls
+  // ensureProfile so existing-but-membership-less users are healed.
+  test('G: ensureProfile backfill unblocks curriculum reads for a pre-orgs profile', async () => {
+    const t = convexTest(schema, modules);
+    await t.mutation(internal.seed.seedScienceProofVerticals, {});
+
+    // Existing profile, NO membership (the state left by the earlier auth fix).
+    await t.run(async (ctx) => {
+      await ctx.db.insert('profiles', {
+        clerk_id: 'preorg-user',
+        email: 'preorg-user@test.dev',
+        role: 'teacher',
+        updated_at: new Date().toISOString(),
+      });
+    });
+
+    const reader = t.withIdentity(identity('preorg-user'));
+
+    // Before backfill: a curriculum read throws the membership error (the crash).
+    await expect(reader.query(api.curriculum.listSubjects, {})).rejects.toThrow(
+      /organisation membership/i,
+    );
+
+    // Auth bootstrap calls ensureProfile → creates personal org + owner membership.
+    await reader.mutation(api.profiles.ensureProfile, {});
+    expect(await membershipCount(t, 'preorg-user')).toBe(1);
+
+    // After backfill: the same read now succeeds.
+    const subjects = await reader.query(api.curriculum.listSubjects, {});
+    expect(subjects.length).toBe(3);
+  });
 });
