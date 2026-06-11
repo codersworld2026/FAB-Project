@@ -13,6 +13,8 @@ import type * as curriculum from "../curriculum.js";
 import type * as curriculumAdmin from "../curriculumAdmin.js";
 import type * as packs from "../packs.js";
 import type * as profiles from "../profiles.js";
+import type * as resources from "../resources.js";
+import type * as usageEvents from "../usageEvents.js";
 
 import type {
   ApiFromModules,
@@ -26,6 +28,8 @@ declare const fullApi: ApiFromModules<{
   curriculumAdmin: typeof curriculumAdmin;
   packs: typeof packs;
   profiles: typeof profiles;
+  resources: typeof resources;
+  usageEvents: typeof usageEvents;
 }>;
 
 /**
