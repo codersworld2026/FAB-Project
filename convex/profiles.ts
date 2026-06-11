@@ -28,7 +28,22 @@ export const ensureProfile = mutation({
       .query('profiles')
       .withIndex('by_clerk_id', (q) => q.eq('clerk_id', identity.subject))
       .unique();
-    if (existing) return existing;
+    if (existing) {
+      // Backfill email/name from the Clerk identity if they've changed (keeps
+      // the profile in sync until a Clerk→Convex webhook takes over).
+      const patch: { email?: string; full_name?: string; updated_at?: string } = {};
+      const email = identity.email ?? '';
+      if (email && email !== existing.email) patch.email = email;
+      if (identity.name && identity.name !== existing.full_name) {
+        patch.full_name = identity.name;
+      }
+      if (Object.keys(patch).length > 0) {
+        patch.updated_at = new Date().toISOString();
+        await ctx.db.patch(existing._id, patch);
+        return await ctx.db.get(existing._id);
+      }
+      return existing;
+    }
 
     const doc: {
       clerk_id: string;
