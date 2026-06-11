@@ -14,7 +14,7 @@ export default async function DashboardLayout({
       {isPreviewMode() ? (
         <div className="bg-amber-100 px-4 py-2 text-center text-xs font-medium text-amber-900 dark:bg-amber-950/60 dark:text-amber-200">
           Preview mode — sample data shown (no login required). Real auth and
-          data activate automatically once Supabase keys are added.
+          data activate automatically once the backend keys are added.
         </div>
       ) : null}
       <AppHeader
