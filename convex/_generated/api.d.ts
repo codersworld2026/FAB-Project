@@ -9,6 +9,8 @@
  */
 
 import type * as authz from "../authz.js";
+import type * as curriculum from "../curriculum.js";
+import type * as curriculumAdmin from "../curriculumAdmin.js";
 import type * as packs from "../packs.js";
 import type * as profiles from "../profiles.js";
 
@@ -20,6 +22,8 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   authz: typeof authz;
+  curriculum: typeof curriculum;
+  curriculumAdmin: typeof curriculumAdmin;
   packs: typeof packs;
   profiles: typeof profiles;
 }>;

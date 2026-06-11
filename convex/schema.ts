@@ -17,8 +17,9 @@ const reviewStatus = v.union(
 );
 
 // --- Curriculum / concept-graph enums (closed unions; new camelCase domain) ---
+// Exported so resolvers/admin mutations reuse the exact same validators (no drift).
 // Key stage / phase a year stage belongs to.
-const yearStagePhase = v.union(
+export const yearStagePhase = v.union(
   v.literal('KS3'),
   v.literal('KS4'),
   v.literal('GCSE'),
@@ -26,7 +27,7 @@ const yearStagePhase = v.union(
 );
 
 // How hard a concept is to grasp (independent of ability suitability).
-const difficultyLevel = v.union(
+export const difficultyLevel = v.union(
   v.literal('foundational'),
   v.literal('developing'),
   v.literal('secure'),
@@ -34,28 +35,28 @@ const difficultyLevel = v.union(
 );
 
 // Which learner abilities a concept / resource suits.
-const abilityLevel = v.union(
+export const abilityLevel = v.union(
   v.literal('support'),
   v.literal('core'),
   v.literal('challenge'),
 );
 
 // Publication lifecycle for platform-authored concepts.
-const conceptStatus = v.union(
+export const conceptStatus = v.union(
   v.literal('draft'),
   v.literal('published'),
   v.literal('archived'),
 );
 
 // Lifecycle for tenant-authored resources.
-const resourceStatus = v.union(
+export const resourceStatus = v.union(
   v.literal('draft'),
   v.literal('ready'),
   v.literal('archived'),
 );
 
 // The kind of teaching resource generated against a concept.
-const resourceType = v.union(
+export const resourceType = v.union(
   v.literal('lesson'),
   v.literal('worksheet'),
   v.literal('quiz'),
@@ -68,7 +69,7 @@ const resourceType = v.union(
 
 // Directed relationships in the concept graph. Canonical direction: A → B with
 // "next" ⇒ B comes after A; A → B with "prerequisite" ⇒ A is required before B.
-const conceptEdgeType = v.union(
+export const conceptEdgeType = v.union(
   v.literal('prerequisite'),
   v.literal('next'),
   v.literal('related'),
